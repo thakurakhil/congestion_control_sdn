@@ -30,12 +30,13 @@ class SimpleSwitch15(app_manager.RyuApp):
         super(SimpleSwitch15, self).__init__(*args, **kwargs)
         self.mac_to_port = {}
 
+    #this is a features reply message that was sent from switch upron feature request by the controller
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-        #this is a features reply message that was sent from switch upron feature request by the controller
+        
 
         # install table-miss flow entry
         #
@@ -68,7 +69,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         parser = datapath.ofproto_parser
         in_port = msg.match['in_port']
         # https://ryu.readthedocs.io/en/latest/ofproto_v1_5_ref.html#ryu.ofproto.ofproto_v1_5_parser.OFPMatch
-        
+
         pkt = packet.Packet(msg.data)
         eth = pkt.get_protocols(ethernet.ethernet)[0]
 
