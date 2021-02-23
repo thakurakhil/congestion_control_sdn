@@ -1,0 +1,1082 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"filter_pa",
+				"filter_pattern"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"ans",
+				"ansvec"
+			],
+			[
+				"vec",
+				"vecset"
+			],
+			[
+				"l",
+				"l"
+			],
+			[
+				"def",
+				"default"
+			],
+			[
+				"fil",
+				"filter_packets"
+			],
+			[
+				"cl",
+				"client"
+			],
+			[
+				"T",
+				"True"
+			],
+			[
+				"ip",
+				"iperf3"
+			],
+			[
+				"for",
+				"format"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"temp",
+				"tempstr1"
+			],
+			[
+				"num",
+				"numDecodings"
+			],
+			[
+				"map",
+				"map	std::map"
+			],
+			[
+				"st",
+				"start"
+			],
+			[
+				"ma",
+				"make_pair"
+			],
+			[
+				"size",
+				"sizea"
+			],
+			[
+				"si",
+				"sizeb"
+			],
+			[
+				"s",
+				"sizeb"
+			],
+			[
+				"to",
+				"totsize"
+			],
+			[
+				"u",
+				"u_start"
+			],
+			[
+				"tem",
+				"tema"
+			],
+			[
+				"str",
+				"string"
+			],
+			[
+				"push",
+				"push_back"
+			],
+			[
+				"e",
+				"end"
+			],
+			[
+				"cur",
+				"cursum"
+			],
+			[
+				"c",
+				"curmax"
+			],
+			[
+				"a",
+				"addTwoNumbers"
+			],
+			[
+				"be",
+				"begin"
+			],
+			[
+				"string",
+				"stringtovec"
+			],
+			[
+				"arg",
+				"argv"
+			],
+			[
+				"ar",
+				"argc"
+			],
+			[
+				"sec",
+				"second_file"
+			],
+			[
+				"fir",
+				"first_file"
+			],
+			[
+				"gz",
+				"gzip"
+			],
+			[
+				"com",
+				"compression"
+			],
+			[
+				"im",
+				"imbalanced_data"
+			],
+			[
+				"su",
+				"sub_it24"
+			],
+			[
+				"ratio_c",
+				"ratio_counter"
+			],
+			[
+				"cer",
+				"centre_x"
+			],
+			[
+				"ce",
+				"centre_y"
+			],
+			[
+				"fa",
+				"fake_bot_open"
+			],
+			[
+				"f",
+				"fake_top_open"
+			],
+			[
+				"stu",
+				"stupid_wall"
+			],
+			[
+				"te",
+				"temp3"
+			],
+			[
+				"max",
+				"max_k"
+			],
+			[
+				"min",
+				"min_j"
+			],
+			[
+				"k",
+				"k"
+			],
+			[
+				"node",
+				"node1"
+			],
+			[
+				"co",
+				"corners_max"
+			],
+			[
+				"m",
+				"maxc"
+			],
+			[
+				"t",
+				"t"
+			],
+			[
+				"S",
+				"s"
+			],
+			[
+				"pro",
+				"processID"
+			],
+			[
+				"d",
+				"def	#ifndef … #define … #endif"
+			],
+			[
+				"valu",
+				"value-64"
+			],
+			[
+				"conc",
+				"concatenationInterface"
+			],
+			[
+				"con",
+				"concatenationInterface"
+			],
+			[
+				"buf",
+				"buffer"
+			],
+			[
+				"lise",
+				"listenSocket"
+			],
+			[
+				"liste",
+				"listenSocket"
+			],
+			[
+				"lis",
+				"listenSocket"
+			],
+			[
+				"conn",
+				"connectionSocket"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"sen",
+				"sensors_plot"
+			],
+			[
+				"mat",
+				"matrixG"
+			],
+			[
+				"ke",
+				"keys"
+			],
+			[
+				"fp",
+				"fprintf	fprintf …"
+			],
+			[
+				"p",
+				"phynbr"
+			],
+			[
+				"L",
+				"LAMBDA"
+			],
+			[
+				"no",
+				"node_id"
+			],
+			[
+				"g",
+				"gridSize"
+			],
+			[
+				"gri",
+				"gridNodeArray"
+			],
+			[
+				"grid",
+				"gridSize"
+			],
+			[
+				"gr",
+				"gridSize"
+			],
+			[
+				"App",
+				"ApplicationContainer"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/akhil/todo",
+			"settings":
+			{
+				"buffer_size": 2894,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "monitor.py",
+			"settings":
+			{
+				"buffer_size": 2741,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "swim2.py",
+			"settings":
+			{
+				"buffer_size": 12712,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "plot_graphs.sh",
+			"settings":
+			{
+				"buffer_size": 2096,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "notepad.txt",
+			"settings":
+			{
+				"buffer_size": 1312,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "helper.py",
+			"settings":
+			{
+				"buffer_size": 3404,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "plot_ping.py",
+			"settings":
+			{
+				"buffer_size": 1576,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "plot_throughput.py",
+			"settings":
+			{
+				"buffer_size": 2617,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "testing/simple.py",
+			"settings":
+			{
+				"buffer_size": 1535,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "simple_switch_15.py",
+			"settings":
+			{
+				"buffer_size": 3962,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/akhil/sharevm/yes/simple.py",
+		"/home/akhil/sharevm/yes/testing/cont.py",
+		"/home/akhil/sharevm/yes/sicc_app1.py",
+		"/home/akhil/sharevm/deps.sh",
+		"/home/akhil/sharevm/sicc_app1.py",
+		"/home/akhil/sharevm/monitor.py",
+		"/home/akhil/sharevm/swim2.py",
+		"/home/akhil/sharevm/topol.py",
+		"/home/akhil/research/SDN-Congestion-Control-master/datacenter_topo.py",
+		"/home/akhil/research/bbr-replication-master/swimboy/deps.sh",
+		"/home/akhil/Downloads/trash/test.html",
+		"/home/akhil/goals",
+		"/home/akhil/VirtualBox VMs/exper/Logs/VBox.log",
+		"/home/akhil/Downloads/trash/short/index.html",
+		"/home/akhil/Music/Phoenix - Wolfgang Amadeus Phoenix (2009) [LosslessFLAC] w Bon/Readme.txt",
+		"/home/akhil/sharevm/log.txt",
+		"/home/akhil/.conky/Custom/myconky",
+		"/home/akhil/Downloads/dead-mans-shoes-yify-english.srt",
+		"/home/akhil/Downloads/illmakeyouoffery00fran_illmakeyouoffery00fran_daisy/illmakeyouoffery00fran_daisy.xml",
+		"/home/akhil/Downloads/illmakeyouoffery00fran_illmakeyouoffery00fran_daisy/resource.res",
+		"/home/akhil/Downloads/illmakeyouoffery00fran_illmakeyouoffery00fran_daisy/book.ao",
+		"/home/akhil/Downloads/illmakeyouoffery00fran_illmakeyouoffery00fran_daisy/daisyTransform.xsl",
+		"/home/akhil/Downloads/illmakeyouoffery00fran_illmakeyouoffery00fran_daisy/README_encrypted.txt",
+		"/home/akhil/Music/tamino-amir-2018-zTa/» p a s s w o r d  [open link].url",
+		"/home/akhil/Music/tamino-amir-2018-zTa/» p a s s w o r d  [readme].txt",
+		"/home/akhil/Downloads/trash/a.php",
+		"/home/akhil/Downloads/trash/b.php",
+		"/home/akhil/Downloads/trash/MKSSMSAPI.php",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/Search_Engine/README.txt",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/Search_Engine/code/Index1.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/Search_Engine/code/Externalmerge.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/Search_Engine/code/query.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/mini/201302181_akhil_phase1/readme.txt",
+		"/home/akhil/Downloads/enwiki-20190301-pages-articles-multistream1.xml-p10p30302",
+		"/home/akhil/sharevm/sicc_app.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/mini/201302181_akhil_phase1/code/indexer.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/mini/201302181_akhil_phase1/code/PorterStemmer.py",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/mini/201302181_akhil_phase1/index1.sh",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/mini/201302181_akhil_phase1/index.sh",
+		"/home/akhil/college_stuff/stuff/another_sem/ire/Search_Engine/code/stop-words-english.txt",
+		"/home/akhil/coding/codejam/1b/a.cpp",
+		"/home/akhil/coding/codejam/1b/c.cpp",
+		"/home/akhil/coding/codejam/1b/b.cpp",
+		"/home/akhil/coding/codejam/qual/sevenkplus-00000000000896b4.py",
+		"/home/akhil/coding/codejam/qual/NormalLewin-0000000000088ac7.py",
+		"/home/akhil/coding/codejam/qual/Milanin-000000000008e072.cpp",
+		"/home/akhil/coding/codejam/qual/Milanin-000000000008b6af.cpp",
+		"/home/akhil/coding/codejam/qual/Milanin-00000000000894f0.cpp",
+		"/home/akhil/coding/codejam/qual/Milanin-0000000000081.cpp",
+		"/home/akhil/coding/gomu.cpp",
+		"/home/akhil/coding/gom.cpp",
+		"/home/akhil/coding/go.cpp",
+		"/home/akhil/coding/codejam/qual/NormalLewin-0000000000088ac7.cpp",
+		"/home/akhil/coding/codejam/qual/sevenkplus-00000000000896b4.cpp",
+		"/home/akhil/coding/codejam/qual/Milanin-000000000008b6af.txt",
+		"/home/akhil/coding/codejam/qual/Milanin-00000000000894f0.txt",
+		"/home/akhil/coding/codejam/qual/sevenkplus-00000000000896b4.txt",
+		"/home/akhil/coding/codejam/qual/NormalLewin-0000000000088ac7.txt",
+		"/home/akhil/coding/codejam/qual/Milanin-000000000008901e.txt",
+		"/home/akhil/coding/testgomu.txt",
+		"/home/akhil/coding/Attempt 1.txt",
+		"/home/akhil/Downloads/trash/x4052 FRESH Spotify Premium Accounts.txt",
+		"/home/akhil/sharevm/rapp.py",
+		"/home/akhil/sharevm/ryuapp.py",
+		"/home/akhil/research/bbr-replication-master/swimboy/monitor.py",
+		"/home/akhil/research/bbr-replication-master/monitor.py",
+		"/home/akhil/research/bbr-replication-master/swimboy/swim.py",
+		"/home/akhil/research/bbr-replication-master/figure5_mininet/bbr_rtt.txt",
+		"/home/akhil/research/bbr-replication-master/install_kernel.sh",
+		"/home/akhil/research/bbr-replication-master/log.txt",
+		"/home/akhil/research/bbr-replication-master/bonus.sh",
+		"/home/akhil/research/bbr-replication-master/plot_throughput.py",
+		"/home/akhil/research/bbr-replication-master/plot_defaults.py",
+		"/home/akhil/research/bbr-replication-master/plot_ping.py",
+		"/home/akhil/research/bbr-replication-master/helper.py",
+		"/home/akhil/research/bbr-replication-master/run_experiments.sh",
+		"/home/akhil/research/bbr-replication-master/figure5.sh",
+		"/home/akhil/research/bbr-replication-master/create_figures.sh",
+		"/home/akhil/research/bbr-replication-master/flows.py",
+		"/home/akhil/research/bbr-replication-master/install_deps.sh",
+		"/home/akhil/research/bbr-replication-master/create_vms.sh",
+		"/home/akhil/research/bbr-replication-master/settings.sh",
+		"/home/akhil/research/bbr-replication-master/README.md",
+		"/home/akhil/research/bbr-replication-master/swim2.py",
+		"/home/akhil/research/bbr-replication-master/swim.py",
+		"/home/akhil/github/ordering-platform/content/include/DB_Connect.php",
+		"/home/akhil/github/ordering-platform/content/include/config.php",
+		"/home/akhil/coding/info.cpp",
+		"/home/akhil/coding/a.cpp",
+		"/home/akhil/coding/haruhi.py",
+		"/home/akhil/Downloads/DC/subtitles/Goal of the dead.srt",
+		"/home/akhil/Downloads/DC/subtitles/Tonnerre-2013-FRENCH-DVDRip-XviD-DesTroY.srt",
+		"/home/akhil/Downloads/DC/subtitles/Renoir.2012.BRRip.XviD.AC3.HORiZON-ArtSubs.Eng.srt",
+		"/home/akhil/Downloads/DC/subtitles/Orpheline.2016.FRENCH.1080p.HDLight.AC3.x264.srt",
+		"/home/akhil/Downloads/DC/subtitles/La.permission.en.minuit.(2011).srt",
+		"/home/akhil/Downloads/DC/subtitles/La.permission.de.minuit.(2011).srt",
+		"/home/akhil/Downloads/DC/subtitles/La.Belle.Vie.2013.FRENCH.DVDRip.x264-UTT-en.srt",
+		"/home/akhil/Downloads/DC/subtitles/(2013)Puppylove[ING].srt",
+		"/home/akhil/history.txt",
+		"/home/akhil/log3.txt",
+		"/home/akhil/Downloads/DC/subtitles/b.txt",
+		"/home/akhil/Downloads/DC/subtitles/a.txt",
+		"/home/akhil/log2.txt",
+		"/home/akhil/log1.txt",
+		"/home/akhil/sysadmin/10.4.4.207.txt",
+		"/home/akhil/sysadmin/10.4.4.76.txt",
+		"/home/akhil/sysadmin/notes_10.4.4.1.txt",
+		"/home/akhil/sysadmin/10.4.4.1.txt",
+		"/home/akhil/log.txt",
+		"/home/akhil/Downloads/Machine Learning/Guide to Task 2 -- Linear Regression (1).ipynb",
+		"/home/akhil/sysadmin/todo.txt",
+		"/home/akhil/CTF/cake/fridge/todo.c",
+		"/home/akhil/CTF/cake/media/media-db.py",
+		"/home/akhil/Downloads/ITC97.ps",
+		"/home/akhil/CTF/cake/fridge/todo",
+		"/home/akhil/CTF/cake/gatekeeper/gatekeeper",
+		"/home/akhil/CTF/cake/firmware/.mediapc_backdoor_password",
+		"/home/akhil/CTF/cake/firmware/challenge2.ext4",
+		"/run/media/akhil/UUI/README.diskdefines",
+		"/run/media/akhil/UUI/Uni-USB-Installer-Readme.txt",
+		"/home/akhil/Downloads/Machine Learning/kaggle/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/corr/correlations.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/new.v1/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/new2/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/new/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/10/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/9/merge.py",
+		"/home/akhil/Downloads/Machine Learning/kaggle/8/merge.py"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"throughpot_",
+			"figure5",
+			"figure6",
+			"filter",
+			"txt",
+			"t",
+			"txt\n\n\n.txt",
+			"txt\n\n\ntxt",
+			"txt\n\n\n",
+			"topol",
+			"_flow_stats_reply_handler",
+			"util",
+			"amss",
+			"bdp",
+			"pipebuffer",
+			"pipebu",
+			"unique",
+			"cout",
+			"%d",
+			"int",
+			"long long int",
+			"mss",
+			"tcp",
+			"ssh root@switch",
+			"ofp",
+			"	",
+			"    ",
+			"        ",
+			"ovs",
+			"iperf",
+			"capture_pa",
+			"capture_packets",
+			"tc ",
+			"fig",
+			"iperf",
+			"ldcon",
+			"print",
+			"obj",
+			"netperf",
+			"false",
+			"window",
+			"sleep",
+			"plot",
+			"buffe",
+			"runner",
+			"build",
+			"storeUser",
+			"admin",
+			"getUserData",
+			"%l64d",
+			"%lld",
+			"repla",
+			".top()",
+			"{",
+			"point",
+			"ap ",
+			"ap",
+			"172.16.30",
+			"10.4.4.253",
+			"tl",
+			"tl_re",
+			"_get_device",
+			"chosen_name",
+			"chosen",
+			"version",
+			"data['version']",
+			"load",
+			"music_data",
+			"50\nratio_counter\nratio_counter",
+			"\nratio_counter\nratio_counter",
+			"outgoin",
+			"$color0",
+			"color$",
+			"\".\"",
+			"\"*\"",
+			"printf",
+			"a[j][k] < ",
+			"< a[",
+			"b[j][k] <",
+			"printf",
+			"\"h\"",
+			"\"-\"",
+			"\"*\"",
+			"%S",
+			"printf",
+			"vibra",
+			"opt",
+			"opt fre",
+			"freq",
+			"harmonic ",
+			"#",
+			"pragma",
+			"bool",
+			"false",
+			"true",
+			"value + ",
+			"*arr",
+			"unk",
+			"calculatorserver",
+			"write",
+			"send",
+			"s.size()",
+			"long long int",
+			"hop",
+			"phynbr",
+			"phynbrsize",
+			"memset",
+			"memset\nmemset",
+			"A",
+			"A ",
+			"RANGE",
+			"DAT_FILE",
+			"plot",
+			"phy_",
+			"neigh",
+			"read_sensor_data",
+			"M_PI",
+			"].",
+			"AppHelper",
+			"goodAppHelper"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"throughput_",
+			"rtt",
+			"throughpot",
+			"// cout",
+			"%lld",
+			"long long int",
+			"int",
+			"sudo",
+			"        ",
+			"    ",
+			"%lld",
+			"%l64d",
+			".front()",
+			"${color0}",
+			"color0$",
+			"'.'",
+			"'*'",
+			"//printf",
+			"b[j][k] <",
+			"< b[",
+			"a[j][k] <",
+			"//printf",
+			"'h'",
+			"'-'",
+			"'*'",
+			"//printf",
+			"int ",
+			"0",
+			"1",
+			"arr",
+			"concatenationserver",
+			"PhyNeighbour",
+			"totPhyNeighbourSize",
+			"]->"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/akhil/todo",
+					"settings":
+					{
+						"buffer_size": 2894,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2038,
+								2038
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2646.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "monitor.py",
+					"settings":
+					{
+						"buffer_size": 2741,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								596,
+								596
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 126.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "swim2.py",
+					"settings":
+					{
+						"buffer_size": 12712,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9731,
+								9731
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5397.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "plot_graphs.sh",
+					"settings":
+					{
+						"buffer_size": 2096,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1487,
+								1487
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "notepad.txt",
+					"settings":
+					{
+						"buffer_size": 1312,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1055,
+								1055
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "helper.py",
+					"settings":
+					{
+						"buffer_size": 3404,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "plot_ping.py",
+					"settings":
+					{
+						"buffer_size": 1576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1312,
+								1312
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "plot_throughput.py",
+					"settings":
+					{
+						"buffer_size": 2617,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1652,
+								1652
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 882.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "testing/simple.py",
+					"settings":
+					{
+						"buffer_size": 1535,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1102,
+								1102
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 126.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "simple_switch_15.py",
+					"settings":
+					{
+						"buffer_size": 3962,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1817,
+								1817
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 39.0
+	},
+	"input":
+	{
+		"height": 39.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 130.0
+	},
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 395.0,
+	"status_bar_visible": true
+}

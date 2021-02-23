@@ -1,0 +1,61 @@
+uname -a
+git clone git://github.com/mininet/mininet 
+mininet/util/install.sh -a 
+sudo apt-get install -y python-termcolor
+sudo apt-get install -y python-matplotlib
+
+wget http://downloads.es.net/pub/iperf/iperf-3.0.11.tar.gz
+tar -xvf iperf-3.0.11.tar.gz
+cd iperf-3.0.11
+./configure
+make
+sudo make install
+sudo ldconfig /usr/local/lib
+
+wget http://launchpadlibrarian.net/306560390/iproute2_4.9.0-1ubuntu1_amd64.deb
+sudo dpkg -i iproute2_4.9.0-1ubuntu1_amd64.deb
+
+sudo apt-get install -y tcptrace
+sudo apt-get install -y unzip
+wget https://github.com/hgn/captcp/archive/master.zip
+unzip master.zip
+cd captcp-master
+sudo make install
+sudo apt-get install -y python-pip
+pip install dpkt
+
+sudo apt-get install -y netperf
+ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -N ''
+
+
+./mounting.sh
+
+
+cat /proc/sys/net/ipv4/tcp_congestion_control  
+cat /proc/sys/net/ipv4/tcp_available_congestion_control
+
+wget https://github.com/PCCproject/PCC-Kernel/archive/master.zip
+unzip master.zip
+cd PCC-Kernel/src
+sudo make
+sudo insmod tcp_pcc.ko
+
+
+
+sudo mn -c
+# ryu-manager controller.py
+#default port is 6633
+#yes/simple_switch_15.py
+ryu-manager simple_switch_15.py --ofp-tcp-listen-port 6633 --verbose
+sudo python swim2.py
+./plot_graphs.sh
+
+
+grep tcpdump /sys/kernel/security/apparmor/profiles #You need to switch from 'enforcement' mode to 'complain' mode on 'tcpdump'
+
+sudo aa-complain /usr/sbin/tcpdump            #for tcpdump operation nor permited
+
+
+
+
+

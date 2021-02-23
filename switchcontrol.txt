@@ -1,0 +1,143 @@
+_uuid               : 5bbcefac-434d-4a9e-bc8f-801d1d3d4b2a
+auto_attach         : []
+controller          : [2f576e24-be6a-4b3a-b6e8-7c32d8763831]
+datapath_id         : "0000000000000004"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : "tor1"
+netflow             : []
+other_config        : {datapath-id="0000000000000004", disable-in-band="true", dp-desc="tor1"}
+ports               : [06a422c1-64bf-473b-af99-860b0a768f85, 18cdd0d1-49fe-4bda-bbc7-bdf8d4e35247, 5362526e-40e5-4258-8946-4b9d9ca03245, f7773200-0652-4ff4-94b8-9a39f79893ff]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
+
+_uuid               : 47e59ac8-9ca6-40f5-8bdb-d83e0b5f1e8c
+auto_attach         : []
+controller          : [f0cd094b-f516-4710-a602-c0f5511866f7]
+datapath_id         : "0000000000000001"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : core
+netflow             : []
+other_config        : {datapath-id="0000000000000001", disable-in-band="true", dp-desc=core}
+ports               : [5cc2c264-b867-469e-8b85-6fac75bef8cf, caf3ce18-97ed-4dc3-a12f-0ed7362ae795, d3fb0857-50c6-43c4-a6fd-d79b882a7102]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
+
+_uuid               : 04db1731-357a-41ac-bb47-ed5f943545cf
+auto_attach         : []
+controller          : [ec4642f4-1f51-4888-b7af-6f4ac79be09f]
+datapath_id         : "0000000000000002"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : "agg1"
+netflow             : []
+other_config        : {datapath-id="0000000000000002", disable-in-band="true", dp-desc="agg1"}
+ports               : [195049fb-fbfb-4562-a86a-dca737d7f4a9, 59aa15cd-dbf7-4300-aecc-033c10efba77, 8c50422d-6622-473c-b629-5166d5cadebb, ad98f025-c589-4f91-a152-95741887b78a]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
+
+_uuid               : bf646532-da9e-4533-951f-265461b74516
+auto_attach         : []
+controller          : [19914cfd-f7c7-4ac3-afc1-1930840e42e7]
+datapath_id         : "0000000000000006"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : "tor3"
+netflow             : []
+other_config        : {datapath-id="0000000000000006", disable-in-band="true", dp-desc="tor3"}
+ports               : [35870272-ce2d-4ba5-9bab-486c20d70b53, 8a97e84a-1571-4c97-b146-d2daee620ae3, d552f015-58a8-42d8-833c-08281d0b3266]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
+
+_uuid               : cf1d3fb6-b9bd-4aaa-be14-ebc0ad985c9f
+auto_attach         : []
+controller          : [715f1f02-40ef-48ce-a45a-2558c0649da3]
+datapath_id         : "0000000000000005"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : "tor2"
+netflow             : []
+other_config        : {datapath-id="0000000000000005", disable-in-band="true", dp-desc="tor2"}
+ports               : [0cc4b385-aed7-4cba-95d6-2c63e0aa18f6, 85557ec9-6a85-4f52-aea7-67fb07e02c33, 97aadbc7-634b-41cf-b091-cc4d3bc82e81]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
+
+_uuid               : 21b6aee3-b322-4a73-990a-5b654f8522bb
+auto_attach         : []
+controller          : [9a0e03ac-4155-487a-b144-fa8d93249366]
+datapath_id         : "0000000000000003"
+datapath_type       : ""
+datapath_version    : "<unknown>"
+external_ids        : {}
+fail_mode           : secure
+flood_vlans         : []
+flow_tables         : {}
+ipfix               : []
+mcast_snooping_enable: false
+mirrors             : []
+name                : "agg2"
+netflow             : []
+other_config        : {datapath-id="0000000000000003", disable-in-band="true", dp-desc="agg2"}
+ports               : [b927aff8-7781-4416-84d6-a657ccc52d8d, c3899d54-604b-4c2a-870e-7175e7e9efc1, ced3c5d9-9f5c-4245-b8f6-6b6567109c12]
+protocols           : ["OpenFlow15"]
+rstp_enable         : false
+rstp_status         : {}
+sflow               : []
+status              : {}
+stp_enable          : false
