@@ -32,6 +32,9 @@ class SimpleMonitor13(simple_switch_13.SimpleSwitch13):
     @set_ev_cls(ofp_event.EventOFPStateChange,
                 [MAIN_DISPATCHER, DEAD_DISPATCHER])
     def _state_change_handler(self, ev):
+        """when the Datapath state becomes MAIN_DISPATCHER, 
+        that switch is registered as the monitor target and when it becomes DEAD_DISPATCHER, 
+        the registration is deleted."""
         datapath = ev.datapath
         if ev.state == MAIN_DISPATCHER:
             if datapath.id not in self.datapaths:
