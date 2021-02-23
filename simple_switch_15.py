@@ -33,6 +33,7 @@ class SimpleSwitch15(app_manager.RyuApp):
     def __init__(self, *args, **kwargs):
         super(SimpleSwitch15, self).__init__(*args, **kwargs)
         self.mac_to_port = {}
+        #below two are from simple monitor
         self.datapaths = {}
         self.monitor_thread = hub.spawn(self._monitor)
 
@@ -103,7 +104,7 @@ class SimpleSwitch15(app_manager.RyuApp):
                              ev.msg.datapath.id, stat.port_no,
                              stat.rx_packets, stat.rx_bytes, stat.rx_errors,
                              stat.tx_packets, stat.tx_bytes, stat.tx_errors)
-            
+
 
     #this is a features reply message that was sent from switch upron feature request by the controller
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
