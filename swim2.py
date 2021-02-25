@@ -311,7 +311,7 @@ def main():
 
     n_iperf_flows = 1
     time_btwn_flows = 0
-
+    """
     cap = start_capture("{}/capture_pcc.dmp".format(args.dir))
     flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     display_countdown(args.time + 5)
@@ -372,7 +372,7 @@ def main():
     
 
     #filter_capture(flows[0]['filter'],"{}/capture_pcc.dmp".format(args.dir),"{}/flow_pcc.dmp".format(args.dir))
-            
+    """            
 
     # trigger a pingAllFull to solve the ARP and the delay associated
     #CLI(net)

@@ -26,6 +26,7 @@ from operator import attrgetter
 from ryu.lib import hub
 
 # Check https://osrg.github.io/ryu-book/en/html/traffic_monitor.html
+# 1414bb8be75b83033d6b721e8600f674da719307
 
 class SimpleSwitch15(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_5.OFP_VERSION]
@@ -70,6 +71,14 @@ class SimpleSwitch15(app_manager.RyuApp):
         req = parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
         datapath.send_msg(req)
 
+    """
+    ingress_policing_rate :
+    the maximum rate (in Kbps) that this VM should be allowed to send
+    
+    ingress_policing_burst :
+    a parameter to the policing algorithm to indicate the 
+    maximum amount of data (in Kb) that this interface can send beyond the policing rate.
+    """
     @set_ev_cls(ofp_event.EventOFPFlowStatsReply, MAIN_DISPATCHER)
     def _flow_stats_reply_handler(self, ev):
         body = ev.msg.body
