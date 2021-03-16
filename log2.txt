@@ -1,0 +1,989 @@
+loading app simple_switch_15.py
+loading app ryu.controller.ofp_handler
+instantiating app ryu.controller.ofp_handler of OFPHandler
+instantiating app simple_switch_15.py of SimpleSwitch15
+BRICK SimpleSwitch15
+  CONSUMES EventOFPStateChange
+  CONSUMES EventOFPFlowStatsReply
+  CONSUMES EventOFPSwitchFeatures
+  CONSUMES EventOFPPortStatsReply
+  CONSUMES EventOFPPacketIn
+BRICK ofp_event
+  PROVIDES EventOFPStateChange TO {'SimpleSwitch15': set(['main', 'dead'])}
+  PROVIDES EventOFPFlowStatsReply TO {'SimpleSwitch15': set(['main'])}
+  PROVIDES EventOFPSwitchFeatures TO {'SimpleSwitch15': set(['config'])}
+  PROVIDES EventOFPPortStatsReply TO {'SimpleSwitch15': set(['main'])}
+  PROVIDES EventOFPPacketIn TO {'SimpleSwitch15': set(['main'])}
+  CONSUMES EventOFPEchoReply
+  CONSUMES EventOFPHello
+  CONSUMES EventOFPPortDescStatsReply
+  CONSUMES EventOFPErrorMsg
+  CONSUMES EventOFPPortStatus
+  CONSUMES EventOFPSwitchFeatures
+  CONSUMES EventOFPEchoRequest
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc3210c3490> address:('127.0.0.1', 44694)
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f193a50> address:('127.0.0.1', 44696)
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f17f610>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0x624a8679,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=2,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000002
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f17fb50> address:('127.0.0.1', 44698)
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f4ae790>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0xea1574ad,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=3,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000003
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f4aea50> address:('127.0.0.1', 44700)
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f5a2590>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0x52f304c7,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=1,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000001
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f4aea90> address:('127.0.0.1', 44702)
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f104550>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0x4474a579,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=4,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000004
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f104b90> address:('127.0.0.1', 44704)
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f104e10>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0xe5a1481a,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=5,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000005
+connected socket:<eventlet.greenio.base.GreenSocket object at 0x7fc31f104950> address:('127.0.0.1', 44706)
+hello ev <ryu.controller.ofp_event.EventOFPHello object at 0x7fc31f10ba90>
+move onto config mode
+EVENT ofp_event->SimpleSwitch15 EventOFPSwitchFeatures
+switch features ev version=0x6,msg_type=0x6,msg_len=0x20,xid=0xe57051db,OFPSwitchFeatures(auxiliary_id=0,capabilities=591,datapath_id=6,n_buffers=0,n_tables=254)
+move onto main mode
+EVENT ofp_event->SimpleSwitch15 EventOFPStateChange
+register datapath: 0000000000000006
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+send stats request: 0000000000000001
+send stats request: 0000000000000002
+send stats request: 0000000000000003
+send stats request: 0000000000000004
+send stats request: 0000000000000005
+send stats request: 0000000000000006
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5a14857
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\xa1\x48\x57\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5a14857
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xea1574ec
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xea\x15\x74\xec\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xea1574ec
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x4474a5b9
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x44\x74\xa5\xb9\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x4474a5b9
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5705219
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\x70\x52\x19\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5705219
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x624a86bf
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x62\x4a\x86\xbf\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x624a86bf
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x52f30502
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x52\xf3\x05\x02\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x52f30502
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+send stats request: 0000000000000001
+send stats request: 0000000000000002
+send stats request: 0000000000000003
+send stats request: 0000000000000004
+send stats request: 0000000000000005
+send stats request: 0000000000000006
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x624a86db
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x62\x4a\x86\xdb\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x624a86db
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x52f30521
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x52\xf3\x05\x21\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x52f30521
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5a14871
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\xa1\x48\x71\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5a14871
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5705234
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\x70\x52\x34\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5705234
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x4474a5d9
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x44\x74\xa5\xd9\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x4474a5d9
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xea157509
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xea\x15\x75\x09\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xea157509
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+send stats request: 0000000000000001
+send stats request: 0000000000000002
+send stats request: 0000000000000003
+send stats request: 0000000000000004
+send stats request: 0000000000000005
+send stats request: 0000000000000006
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x624a86ef
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x62\x4a\x86\xef\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x624a86ef
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5a14885
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\xa1\x48\x85\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5a14885
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5705248
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\x70\x52\x48\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5705248
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x4474a5ed
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x44\x74\xa5\xed\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x4474a5ed
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x52f30535
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x52\xf3\x05\x35\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x52f30535
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xea15751d
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xea\x15\x75\x1d\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xea15751d
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+send stats request: 0000000000000001
+send stats request: 0000000000000002
+send stats request: 0000000000000003
+send stats request: 0000000000000004
+send stats request: 0000000000000005
+send stats request: 0000000000000006
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5a14886
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\xa1\x48\x86\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5a14886
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5705249
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\x70\x52\x49\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5705249
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x52f30536
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x52\xf3\x05\x36\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x52f30536
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x4474a5ee
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x44\x74\xa5\xee\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x4474a5ee
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x624a86f0
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x62\x4a\x86\xf0\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x624a86f0
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xea15751e
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xea\x15\x75\x1e\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xea15751e
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+EVENT ofp_event->SimpleSwitch15 EventOFPPacketIn
+send stats request: 0000000000000001
+send stats request: 0000000000000002
+send stats request: 0000000000000003
+send stats request: 0000000000000004
+send stats request: 0000000000000005
+send stats request: 0000000000000006
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x624a86f6
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x62\x4a\x86\xf6\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x624a86f6
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe570524f
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\x70\x52\x4f\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe570524f
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xe5a1488c
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xe5\xa1\x48\x8c\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xe5a1488c
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x52f3053c
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x52\xf3\x05\x3c\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x52f3053c
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0x4474a5f4
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\x44\x74\xa5\xf4\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0x4474a5f4
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+EventOFPErrorMsg received.
+version=0x6, msg_type=0x1, msg_len=0x44, xid=0xea157524
+ `-- msg_type: OFPT_ERROR(1)
+OFPErrorMsg(type=0x1, code=0x2, data=b'\x06\x12\x00\x38\xea\x15\x75\x24\x00\x11\x00\x00\x00\x00\x00\x00\xff\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00')
+ |-- type: OFPET_BAD_REQUEST(1)
+ |-- code: OFPBRC_BAD_MULTIPART(2)
+ `-- data: version=0x6, msg_type=0x12, msg_len=0x38, xid=0xea157524
+     `-- msg_type: OFPT_MULTIPART_REQUEST(18)
+^CKeyboard Interrupt received. Closing RYU application manager...
+akhil@akhil-VirtualBox:~/files$ 
+

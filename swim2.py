@@ -73,6 +73,103 @@ class ExperimentTopo(Topo):
         # Add default members to class
         super(ExperimentTopo, self).__init__()
 
+        switch_config = {
+            #'enable_ecn': args.ecn,
+            #'use_hfsc': args.use_hfsc,
+            'max_queue_size': 60
+        }
+
+        switch_lconfig1  = {
+            'bw':    1000,
+            'delay': '0.2ms'
+        }
+        switch_lconfig2  = {
+            'bw':    1000,
+            'delay': '0.2ms'
+        }
+        switch_lconfig3  = {
+            'bw':    1000,
+            'delay': '0.2ms'
+        }
+        link_lconfig1 = {
+            'bw':    1000,
+            'delay': '1ms'
+        }
+        link_lconfig2 = {
+            'bw':    1000,
+            'delay': '1ms'
+        }
+        link_lconfig3 = {
+            'bw':    1000,
+            'delay': '1ms'
+        }
+        link_lconfig4 = {
+            'bw':    1000,
+            'delay': '1ms'
+        }
+        
+
+        """Configure the port and set its properties.
+           bw: bandwidth in b/s (e.g. '10m')
+           delay: transmit delay (e.g. '1ms' )
+           jitter: jitter (e.g. '1ms')
+           loss: loss (e.g. '1%' )
+           gro: enable GRO (False)
+           txo: enable transmit checksum offload (True)
+           rxo: enable receive checksum offload (True)
+           speedup: experimental switch-side bw option
+           use_hfsc: use HFSC scheduling
+           use_tbf: use TBF scheduling
+           latency_ms: TBF latency parameter
+           enable_ecn: enable ECN (False)
+           enable_red: enable RED (False)
+           max_queue_size: queue limit parameter for netem in packets length"""
+
+        # Just create a partial topology for the experiment to save resources
+        self.addSwitch('s1', dpid='0000000000000001', **switch_config)
+        self.addSwitch('s2', dpid='0000000000000002', **switch_config)
+        self.addSwitch('s3', dpid='0000000000000003', **switch_config)
+        self.addSwitch('s4', dpid='0000000000000004', **switch_config)
+        self.addSwitch('s5', dpid='0000000000000005', **switch_config)
+        self.addSwitch('s6', dpid='0000000000000006', **switch_config)
+        self.addSwitch('s7', dpid='0000000000000007', **switch_config)
+
+        # Connect the switches together
+        self.addLink('s1', 's2', **switch_lconfig1)
+        self.addLink('s2', 's3', **switch_lconfig1)
+        self.addLink('s3', 's4', **switch_lconfig1)
+        self.addLink('s1', 's5', **switch_lconfig1)
+        self.addLink('s5', 's6', **switch_lconfig2)
+        self.addLink('s6', 's4', **switch_lconfig2)
+        self.addLink('s5', 's7', **switch_lconfig3)
+        self.addLink('s7', 's4', **switch_lconfig3)
+
+        # the 7 hosts
+        host_format = 'h{:02x}{:02x}{:02x}'
+        
+        self.addHost('h010101', ip='10.1.1.1', mac='00:00:00:01:01:01')
+        self.addLink('s1', 'h010101', **link_lconfig1)
+
+        self.addHost('h010201', ip='10.1.2.1', mac='00:00:00:01:02:01')
+        self.addLink('s2', 'h010201', **link_lconfig2)
+        self.addHost('h010202', ip='10.1.2.2', mac='00:00:00:01:02:02')
+        self.addLink('s2', 'h010202', **link_lconfig2)
+        self.addHost('h010203', ip='10.1.2.3', mac='00:00:00:01:02:03')
+        self.addLink('s2', 'h010203', **link_lconfig2)
+
+        self.addHost('h010301', ip='10.1.3.1', mac='00:00:00:01:03:01')
+        self.addLink('s7', 'h010301', **link_lconfig3)
+        self.addHost('h010302', ip='10.1.3.2', mac='00:00:00:01:03:02')
+        self.addLink('s7', 'h010302', **link_lconfig3)
+
+        self.addHost('h010401', ip='10.1.4.1', mac='00:00:00:01:04:01')
+        self.addLink('s4', 'h010401', **link_lconfig4)
+
+
+    def DCTopo(self):
+        # Add default members to class
+        super(ExperimentTopo, self).__init__()
+
         tor_lconfig  = {
             'bw':    1000
             # 'delay': '0.1ms'
@@ -241,8 +338,8 @@ def iperf_commands(index, h1, h2, port, cong, duration, outdir, delay=0):
 
 def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
                 pre_flow_action=None, flow_monitor=None):
-    h1 = net.get("h010102")
-    h2 = net.get("h020101")
+    h1 = net.get("h010101")
+    h2 = net.get("h010401")
 
     print "Starting {} flows...".format(cong)
     flows = []
@@ -311,6 +408,9 @@ def main():
 
     n_iperf_flows = 1
     time_btwn_flows = 0
+    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    flows = None
+
     """
     cap = start_capture("{}/capture_pcc.dmp".format(args.dir))
     flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
@@ -375,11 +475,11 @@ def main():
     """            
 
     # trigger a pingAllFull to solve the ARP and the delay associated
-    #CLI(net)
+    CLI(net)
     # Stop mininet
-    net.stop()
+    #net.stop()
 
-    plot_graphs()
+    #plot_graphs()
     # Kill the controller process
     #controller_proc.terminate();
 
