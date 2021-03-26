@@ -113,7 +113,15 @@ sudo mn -c
 ryu-manager simple_switch_15.py --ofp-tcp-listen-port 6633 --verbose
 sudo python swim2.py
 
-sudo ovs-vsctl set bridge tor2 protocols=OpenFlow15
+sudo ovs-vsctl set s1 protocols=OpenFlow15
+ovs-appctl fdb/show s1
+ovs-ofctl show s1
+--protocols=OpenFlow15
+ovs-ofctl dump-flows s1
+
+ovs-vsctl list Bridge
+ovs-vsctl list Port
+ovs-vsctl list Interface
 
 
 ./plot_graphs.sh
@@ -145,3 +153,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y -q remove $pkgs
         done
     fi
     echo "Done removing OVS"
+
+
+
+
+ip link del s2-eth1;ip link del s1-eth1;ip link del s1-eth1;ip link del s2-eth1;ip link del s5-eth1;ip link del s1-eth2;ip link del s1-eth2;ip link del s5-eth1;ip link del s3-eth1;ip link del s2-eth2;ip link del s2-eth2;ip link del s3-eth1;ip link del s4-eth1;ip link del s3-eth2;ip link del s3-eth2;ip link del s4-eth1;ip link del s6-eth1;ip link del s5-eth2;ip link del s5-eth2;ip link del s6-eth1;ip link del s7-eth1;ip link del s5-eth3;ip link del s5-eth3;ip link del s7-eth1;ip link del s4-eth2;ip link del s6-eth2;ip link del s6-eth2;ip link del s4-eth2;ip link del s4-eth3;ip link del s7-eth2;ip link del s7-eth2;ip link del s4-eth3 
+

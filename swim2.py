@@ -126,49 +126,50 @@ class ExperimentTopo(Topo):
            max_queue_size: queue limit parameter for netem in packets length"""
 
         # Just create a partial topology for the experiment to save resources
-        self.addSwitch('s1', dpid='0000000000000001', **switch_config)
-        self.addSwitch('s2', dpid='0000000000000002', **switch_config)
-        self.addSwitch('s3', dpid='0000000000000003', **switch_config)
-        self.addSwitch('s4', dpid='0000000000000004', **switch_config)
-        self.addSwitch('s5', dpid='0000000000000005', **switch_config)
-        self.addSwitch('s6', dpid='0000000000000006', **switch_config)
-        self.addSwitch('s7', dpid='0000000000000007', **switch_config)
+        self.addSwitch('sw1', dpid='0000000000000001', **switch_config)
+        self.addSwitch('sw2', dpid='0000000000000002', **switch_config)
+        self.addSwitch('sw3', dpid='0000000000000003', **switch_config)
+        self.addSwitch('sw4', dpid='0000000000000004', **switch_config)
+        self.addSwitch('sw5', dpid='0000000000000005', **switch_config)
+        self.addSwitch('sw6', dpid='0000000000000006', **switch_config)
+        self.addSwitch('sw7', dpid='0000000000000007', **switch_config)
 
         # Connect the switches together
-        self.addLink('s1', 's2', **switch_lconfig1)
-        self.addLink('s2', 's3', **switch_lconfig1)
-        self.addLink('s3', 's4', **switch_lconfig1)
-        self.addLink('s1', 's5', **switch_lconfig1)
-        self.addLink('s5', 's6', **switch_lconfig2)
-        self.addLink('s6', 's4', **switch_lconfig2)
-        self.addLink('s5', 's7', **switch_lconfig3)
-        self.addLink('s7', 's4', **switch_lconfig3)
+        self.addLink('sw1', 'sw2', **switch_lconfig1)
+        self.addLink('sw2', 'sw3', **switch_lconfig1)
+        self.addLink('sw3', 'sw4', **switch_lconfig1)
+        self.addLink('sw1', 'sw5', **switch_lconfig1)
+        self.addLink('sw5', 'sw6', **switch_lconfig2)
+        self.addLink('sw6', 'sw4', **switch_lconfig2)
+        self.addLink('sw5', 'sw7', **switch_lconfig3)
+        self.addLink('sw7', 'sw4', **switch_lconfig3)
 
         # the 7 hosts
         host_format = 'h{:02x}{:02x}{:02x}'
         
         self.addHost('h010101', ip='10.1.1.1', mac='00:00:00:01:01:01')
-        self.addLink('s1', 'h010101', **link_lconfig1)
+        self.addLink('sw1', 'h010101', **link_lconfig1)
 
         self.addHost('h010201', ip='10.1.2.1', mac='00:00:00:01:02:01')
-        self.addLink('s2', 'h010201', **link_lconfig2)
+        self.addLink('sw2', 'h010201', **link_lconfig2)
         self.addHost('h010202', ip='10.1.2.2', mac='00:00:00:01:02:02')
-        self.addLink('s2', 'h010202', **link_lconfig2)
+        self.addLink('sw2', 'h010202', **link_lconfig2)
         self.addHost('h010203', ip='10.1.2.3', mac='00:00:00:01:02:03')
-        self.addLink('s2', 'h010203', **link_lconfig2)
+        self.addLink('sw2', 'h010203', **link_lconfig2)
 
         self.addHost('h010301', ip='10.1.3.1', mac='00:00:00:01:03:01')
-        self.addLink('s7', 'h010301', **link_lconfig3)
+        self.addLink('sw7', 'h010301', **link_lconfig3)
         self.addHost('h010302', ip='10.1.3.2', mac='00:00:00:01:03:02')
-        self.addLink('s7', 'h010302', **link_lconfig3)
+        self.addLink('sw7', 'h010302', **link_lconfig3)
 
         self.addHost('h010401', ip='10.1.4.1', mac='00:00:00:01:04:01')
-        self.addLink('s4', 'h010401', **link_lconfig4)
+        self.addLink('sw4', 'h010401', **link_lconfig4)
 
 
-    def DCTopo(self):
+class DCTopo(Topo):
+    def __init__(self):
         # Add default members to class
-        super(ExperimentTopo, self).__init__()
+        super(DCTopo, self).__init__()
 
         tor_lconfig  = {
             'bw':    1000
@@ -237,7 +238,7 @@ class ExperimentTopo(Topo):
         hostname = host_format.format(2, 1, 1)
         #in the format of h020101
         self.addHost(hostname, ip='10.2.1.1', mac='00:00:00:02:01:01')
-        self.addLink('tor3', hostname, **tor_lconfig)
+        self.addLink('tor3', hostname, **tor_lconfig)    
 
 #specific monitor for bbr parameters obtained from comand ss
 def start_bbrmon(dst, interval_sec=0.1, outfile="bbr.txt", runner=None):
@@ -340,6 +341,7 @@ def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
                 pre_flow_action=None, flow_monitor=None):
     h1 = net.get("h010101")
     h2 = net.get("h010401")
+    #h2 = net.get("h020101")
 
     print "Starting {} flows...".format(cong)
     flows = []
@@ -392,6 +394,7 @@ def main():
 
 	#creating a mininet network
     controller = RemoteController('c1', ip='127.0.0.1', port=args.cport)
+    #topo = DCTopo()
     topo = ExperimentTopo()
     switch = partial(OVSSwitch, protocols='OpenFlow15')
     net = Mininet(topo=topo, link=TCLink, autoSetMacs=True, autoStaticArp=True, controller=controller, switch=switch)
@@ -403,15 +406,15 @@ def main():
     net.start()
     
     dumpNodeConnections(net.hosts) #diagnostic thing
-    net.pingAll()
+    #net.pingAll()
 
-
+    """
     n_iperf_flows = 1
     time_btwn_flows = 0
     flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     flows = None
 
-    """
+    
     cap = start_capture("{}/capture_pcc.dmp".format(args.dir))
     flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     display_countdown(args.time + 5)

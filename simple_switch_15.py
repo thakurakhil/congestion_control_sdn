@@ -55,7 +55,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         #below two are from simple monitor
         self.datapaths = {}
         self.query_interval = 2
-        self.monitor_thread = hub.spawn(self._monitor)
+        #self.monitor_thread = hub.spawn(self._monitor)
         self.rate_limited_switches = []
         self.switch_interfaces = ["s1-eth3", "s2-eth3", "s3-eth1", "s3-eth2", "s3-eth3", "s4-eth1", "s4-eth2",
                                           "s5-eth1", "s5-eth2", "s5-eth3", "s6-eth3", "s7-eth3"]
@@ -291,28 +291,32 @@ class SimpleSwitch15(app_manager.RyuApp):
 
         # learn a mac address to avoid FLOOD next time.
         self.mac_to_port[dpid][src] = in_port
-
+        print "SETTING == datapath : " + str(dpid) + "  src : " + str(src) + "  in_port : " + str(in_port)
         if dst in self.mac_to_port[dpid]:
             out_port = self.mac_to_port[dpid][dst]
+            #print "im here with out_port : " + str(out_port) + "\n"
+            #print self.mac_to_port
         else:
             out_port = ofproto.OFPP_FLOOD
+            #print "flooding goes brrr..."
 
         actions = [parser.OFPActionOutput(out_port)]
 
         # install a flow to avoid packet_in next time
         if out_port != ofproto.OFPP_FLOOD:
             match = parser.OFPMatch(in_port=in_port, eth_dst=dst)
+            print "NOTFLOOD : datapath : " + str(dpid) + "  src : " + str(src) + "  in_port : " + str(in_port) + "  dst : " + str(dst) + "  out_port : " + str(out_port) + " " 
             self.add_flow(datapath, 1, match, actions)
 
+        
         data = None
         if msg.buffer_id == ofproto.OFP_NO_BUFFER:
             data = msg.data
-
         match = parser.OFPMatch(in_port=in_port)
-
-        out = parser.OFPPacketOut(datapath=datapath, buffer_id=msg.buffer_id,
-                                  match=match, actions=actions, data=data)
+        out = parser.OFPPacketOut(datapath=datapath, buffer_id=msg.buffer_id, match=match, actions=actions, data=data)
+        #print "FLOOD : datapath : " + str(dpid) + "  in_port : " + str(in_port) + "  dst : " + str(dst) + "  out_port : " + str(out_port) + " " 
         datapath.send_msg(out)
+
         #if msg.reason == ofproto.TABLE_MISS:
         #    reason = 'TABLE MISS'
         #elif msg.reason == ofproto.OFPR_APPLY_ACTION:
@@ -327,10 +331,11 @@ class SimpleSwitch15(app_manager.RyuApp):
         #    reason = 'PACKET OUT'
         #else:
         reason = 'unknown'
-
+        #if str(out_port) != "4294967291":
+        #    print "datapath : " + str(dpid) + "  in_port : " + str(in_port) + "  dst : " + str(dst) + "  out_port : " + str(out_port) + " " 
         #self.logger.debug('OFPPacketIn received: '
         #             'buffer_id=%x total_len=%d reason=%s '
-        #              'table_id=%d cookie=%d match=%s data=%s',
+        #              'table_id=%d cookie=%d match=%s data=%s dst=%s  src=%s',
         #              msg.buffer_id, msg.total_len, reason,
         #              msg.table_id, msg.cookie, msg.match,
-        #              utils.hex_array(msg.data))
+        #              utils.hex_array(msg.data), dst, src)

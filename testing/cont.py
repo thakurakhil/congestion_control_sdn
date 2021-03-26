@@ -15,6 +15,7 @@ from ryu.lib.packet import ether_types
 DEFAULT_FLOW_PRIORITY = 32767
 DEFAULT_BUCKET_WEIGHT = 0
 
+#https://github.com/Yi-Tseng/SDN-Work/blob/cb0e6d8680bfb625b7735089a19aac73fc262693/FastFailover/ff.py
 
 class SimpleSwitch13(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
