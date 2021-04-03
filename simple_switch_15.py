@@ -28,6 +28,10 @@ from ryu.lib.packet import ether_types
 from operator import attrgetter
 from ryu.lib import hub
 
+from ryu.topology.api import get_switch, get_link
+from ryu.topology import event, switches 
+import networkx as nx
+
 from ryu import utils
 # Check https://osrg.github.io/ryu-book/en/html/traffic_monitor.html
 # 1414bb8be75b83033d6b721e8600f674da719307
@@ -60,7 +64,17 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.switch_interfaces = ["s1-eth3", "s2-eth3", "s3-eth1", "s3-eth2", "s3-eth3", "s4-eth1", "s4-eth2",
                                           "s5-eth1", "s5-eth2", "s5-eth3", "s6-eth3", "s7-eth3"]
         self.switch_dpids = {0x1: "s1", 0x2: "s2", 0x3: "s3", 0x4: "s4", 0x5: "s5", 0x6: "s6", 0x7: "s7"}
+        self.topology_api_app = self
+        self.net=nx.DiGraph()
+        self.nodes = {}
+        self.links = {}
+        self.no_of_nodes = 0
+        self.no_of_links = 0
+        self.i=0
 
+    # Handy function that lists all attributes in the given object
+    def ls(self,obj):
+        print("\n".join([x for x in dir(obj) if x[0] != "_"]))
 
     # Convert from byte count delta to bitrate
     def bitrate(self, bytes):
@@ -255,6 +269,49 @@ class SimpleSwitch15(app_manager.RyuApp):
                                           ofproto.OFPCML_NO_BUFFER)]
         self.add_flow(datapath, 0, match, actions)
 
+    @set_ev_cls(event.EventSwitchEnter)
+    def get_topology_data(self, ev):
+        switch_list = get_switch(self.topology_api_app, None)   
+        switches=[switch.dp.id for switch in switch_list]
+        self.net.add_nodes_from(switches)
+         
+        #print "**********List of switches"
+        #for switch in switch_list:
+        #self.ls(switch)
+        #print switch
+        #self.nodes[self.no_of_nodes] = switch
+        #self.no_of_nodes += 1
+    
+        links_list = get_link(self.topology_api_app, None)
+        #print links_list
+        links=[(link.src.dpid,link.dst.dpid,{'port':link.src.port_no}) for link in links_list]
+        #print links
+        self.net.add_edges_from(links)
+        links=[(link.dst.dpid,link.src.dpid,{'port':link.dst.port_no}) for link in links_list]
+        #print links
+        self.net.add_edges_from(links)
+        print "**********List of links"
+        print self.net.edges()
+        #for link in links_list:
+        #print link.dst
+            #print link.src
+            #print "Novo link"
+        #self.no_of_links += 1
+      
+        
+        #print "@@@@@@@@@@@@@@@@@Printing both arrays@@@@@@@@@@@@@@@"
+        #for node in self.nodes:    
+        #    print self.nodes[node]
+        #for link in self.links:
+        #    print self.links[link]
+        #print self.no_of_nodes
+        #print self.no_of_links
+
+        #@set_ev_cls(event.EventLinkAdd)
+        #def get_links(self, ev):
+        #print "################Something##############"
+        #print ev.link.src, ev.link.dst
+
     def add_flow(self, datapath, priority, match, actions):
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
@@ -292,10 +349,19 @@ class SimpleSwitch15(app_manager.RyuApp):
         # learn a mac address to avoid FLOOD next time.
         self.mac_to_port[dpid][src] = in_port
         print "SETTING == datapath : " + str(dpid) + "  src : " + str(src) + "  in_port : " + str(in_port)
-        if dst in self.mac_to_port[dpid]:
-            out_port = self.mac_to_port[dpid][dst]
+        
+        if src not in self.net:
+            self.net.add_node(src)
+            self.net.add_edge(dpid,src,{'port':msg.in_port})
+            self.net.add_edge(src,dpid)
+
+        if dst in self.net:
+            #out_port = self.mac_to_port[dpid][dst]
             #print "im here with out_port : " + str(out_port) + "\n"
             #print self.mac_to_port
+            path=nx.shortest_path(self.net,src,dst)   
+            next=path[path.index(dpid)+1]
+            out_port=self.net[dpid][next]['port']
         else:
             out_port = ofproto.OFPP_FLOOD
             #print "flooding goes brrr..."
