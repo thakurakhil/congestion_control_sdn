@@ -12,22 +12,25 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from __future__ import division
 
 import matplotlib.pyplot as plt
 import time
-
-from __future__ import division
 import copy
 
 from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER,  DEAD_DISPATCHER, HANDSHAKE_DISPATCHER
 from ryu.controller.handler import set_ev_cls
-from ryu.ofproto import ofproto_v1_5
-from ryu.ofproto import ofproto_v1_5_parser
+#from ryu.ofproto import ofproto_v1_5
+#from ryu.ofproto import ofproto_v1_5_parser
 from ryu.ofproto import ofproto_v1_4
 from ryu.ofproto import ofproto_v1_4_parser
 from ryu.lib.packet import packet
+from ryu.lib.packet import arp
+from ryu.lib.packet import ipv4
+from ryu.lib.packet import tcp
+from ryu.lib.packet import udp
 from ryu.lib.packet import ethernet
 from ryu.lib.packet import ether_types
 
@@ -39,30 +42,32 @@ from ryu.topology import event, switches
 import networkx as nx
 
 from ryu import utils
+
 # Check https://osrg.github.io/ryu-book/en/html/traffic_monitor.html
 # 1414bb8be75b83033d6b721e8600f674da719307
 
 # workaround for statsreply of OF15 as suggested by https://www.mail-archive.com/ryu-devel@lists.sourceforge.net/msg14569.html
 
-class OFPFlowStatsReply(ofproto_v1_5_parser.OFPMultipartReply,
-                        ofproto_v1_4_parser.OFPFlowStatsReply):
-    pass
+#class OFPFlowStatsReply(ofproto_v1_5_parser.OFPMultipartReply,
+#                        ofproto_v1_4_parser.OFPFlowStatsReply):
+#   pass
 
 
-ofproto_v1_5_parser.OFPMultipartReply._STATS_MSG_TYPES[
+#ofproto_v1_5_parser.OFPMultipartReply._STATS_MSG_TYPES[
     # Note: not OFPMP_FLOW_STATS(=17), use OFPMP_FLOW_DESC(=1)
-    ofproto_v1_5.OFPMP_FLOW_DESC] = OFPFlowStatsReply
+#    ofproto_v1_5.OFPMP_FLOW_DESC] = OFPFlowStatsReply
 
 
 MAX_CAPACITY = 10000
 
 class SimpleSwitch15(app_manager.RyuApp):
-    OFP_VERSIONS = [ofproto_v1_5.OFP_VERSION]
+    OFP_VERSIONS = [ofproto_v1_4.OFP_VERSION]
 
     events = [event.EventSwitchEnter,
               event.EventSwitchLeave, event.EventPortAdd,
               event.EventPortDelete, event.EventPortModify,
               event.EventLinkAdd, event.EventLinkDelete]
+    WEIGHT_MODEL = {'hop': 'weight', 'bw': 'bw'}
 
     def __init__(self, *args, **kwargs):
         super(SimpleSwitch15, self).__init__(*args, **kwargs)
@@ -71,9 +76,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.datapaths = {}
         self.query_interval = 2
         
-        ###################################################
-        #self.monitor_thread = hub.spawn(self._monitor)####
-        ###################################################
+        #self.monitor_thread = hub.spawn(self._monitor)
 
         self.rate_limited_switches = []
         self.switch_interfaces = ["s1-eth3", "s2-eth3", "s3-eth1", "s3-eth2", "s3-eth3", "s4-eth1", "s4-eth2",
@@ -102,6 +105,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.start_time = time.time()
         self.discover_thread = hub.spawn(self._discover)
 
+        self.weight = self.WEIGHT_MODEL['bw']
 
         self.port_stats = {}
         self.port_speed = {}
@@ -124,7 +128,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
             Main entry method of monitoring traffic.
         """
-        while CONF.weight == 'bw':
+        while self.weight == 'bw':
             self.stats['flow'] = {}
             self.stats['port'] = {}
             for dp in self.datapaths.values():
@@ -143,21 +147,55 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
             Save bandwidth data into networkx graph object.
         """
-        while CONF.weight == 'bw':
+        while self.weight == 'bw':
             self.graph = self.create_bw_graph(self.free_bandwidth)
             self.logger.debug("save free bandwidth")
             hub.sleep(5)
+    
+    def show_topology(self):
+        if self.pre_link_to_port != self.link_to_port:
+            # It means the link_to_port table has changed.
+            _graph = self.graph.copy()
+            print "\n---------------------Link Port---------------------"
+            print '%6s' % ('switch'),
+            for node in sorted([node for node in _graph.nodes()], key=lambda node: node):
+                print '%6d' % node,
+            print
+            for node1 in sorted([node for node in _graph.nodes()], key=lambda node: node):
+                print '%6d' % node1,
+                for node2 in sorted([node for node in _graph.nodes()], key=lambda node: node):
+                    if (node1, node2) in self.link_to_port.keys():
+                        print '%6s' % str(self.link_to_port[(node1, node2)]),
+                    else:
+                        print '%6s' % '/',
+                print
+            print
+            self.pre_link_to_port = self.link_to_port.copy()
+
+        if self.pre_access_table != self.access_table:
+            # It means the access_table has changed.
+            print "\n----------------Access Host-------------------"
+            print '%10s' % 'switch', '%10s' % 'port', '%22s' % 'Host'
+            if not self.access_table.keys():
+                print "    NO found host"
+            else:
+                for sw in sorted(self.access_table.keys()):
+                    print '%10d' % sw[0], '%10d      ' % sw[1], self.access_table[sw]
+            print
+            self.pre_access_table = self.access_table.copy()
 
     def _discover(self):
-        self.get_topology(None)
-        #i = 0
-        #while True:
-        #    self.show_topology()
-        #    if i == 2:   # Reload topology every 20 seconds.
-        #        self.get_topology(None)
-        #        i = 0
-        #    hub.sleep(setting.DISCOVERY_PERIOD)
-        #    i = i + 1
+        #self.show_topology()
+        #self.get_topology(None)
+        temp = 0
+        while True:
+            print("im here")
+            self.show_topology()
+            if temp == 2:   # Reload topology every 20 seconds.
+                self.get_topology(None)
+                temp = 0
+            hub.sleep(10)
+            temp = temp + 1
 
 
     def create_bw_graph(self, bw_dict):
@@ -240,18 +278,22 @@ class SimpleSwitch15(app_manager.RyuApp):
     def _get_period(self, n_sec, n_nsec, p_sec, p_nsec):
         return self._get_time(n_sec, n_nsec) - self._get_time(p_sec, p_nsec)
 
+    ### to do op4 parser
+
     def _request_stats(self, datapath):
         """
             Sending request msg to datapath
         """
         self.logger.debug('send stats request: %016x', datapath.id)
+        ofp = ofproto_v1_4
         ofproto = datapath.ofproto
-        parser = datapath.ofproto_parser
-        req = parser.OFPPortDescStatsRequest(datapath, 0)
+        ofp_parser = ofproto_v1_4_parser
+        #parser = datapath.ofproto_parser
+        req = ofp_parser.OFPPortDescStatsRequest(datapath, 0)
         datapath.send_msg(req)
-        req = parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
+        req = ofp_parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
         datapath.send_msg(req)
-        req = parser.OFPFlowStatsRequest(datapath)
+        req = ofp_parser.OFPFlowStatsRequest(datapath)
         datapath.send_msg(req)
 
     def get_min_bw_of_links(self, graph, path, min_bw):
@@ -327,7 +369,8 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.graph = self.get_graph(self.link_to_port.keys())
         self.shortest_paths = self.all_k_shortest_paths(
             self.graph, weight='weight', k=4)
-
+        print self.shortest_paths
+        self.logger.info("[DONE NETWORK TOPOLOGY]")
     def create_port_map(self, switch_list):
         """
             Create interior_port table and access_port table.
@@ -434,29 +477,13 @@ class SimpleSwitch15(app_manager.RyuApp):
                 self.logger.debug('unregister datapath: %016x', datapath.id)
                 del self.datapaths[datapath.id]
 
-    def _monitor(self):
-        while True:
-            for dp in self.datapaths.values():
-                self._request_stats(dp)
-            hub.sleep(self.query_interval)
+    # def _monitor(self):
+    #     while True:
+    #         for dp in self.datapaths.values():
+    #             self._request_stats(dp)
+    #         hub.sleep(self.query_interval)
 
-    def _request_stats(self, datapath):
-        self.logger.debug('send stats request: %016x', datapath.id)
-        ofp = ofproto_v1_4
-        ofp_parser = ofproto_v1_4_parser
-        ofproto = datapath.ofproto
-        parser = datapath.ofproto_parser
-        match = ofp_parser.OFPMatch(in_port=1)
-        cookie = cookie_mask = 0
-        req = ofp_parser.OFPFlowStatsRequest(datapath, 0,
-                                         ofp.OFPTT_ALL,
-                                         ofp.OFPP_ANY, ofp.OFPG_ANY,
-                                         cookie, cookie_mask,
-                                         match)
-        datapath.send_msg(req)
-
-        #req = parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
-        #datapath.send_msg(req)
+    
 
     @set_ev_cls(ofp_event.EventOFPErrorMsg,[HANDSHAKE_DISPATCHER, CONFIG_DISPATCHER, MAIN_DISPATCHER])
     def error_msg_handler(self, ev):
@@ -627,7 +654,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.free_bandwidth.setdefault(dpid, {})
         for stat in sorted(body, key=attrgetter('port_no')):
             port_no = stat.port_no
-            if port_no != ofproto_v1_3.OFPP_LOCAL:
+            if port_no != ofproto_v1_4.OFPP_LOCAL:
                 key = (dpid, port_no)
                 value = (stat.tx_bytes, stat.rx_bytes, stat.rx_errors,
                          stat.duration_sec, stat.duration_nsec)
@@ -671,9 +698,9 @@ class SimpleSwitch15(app_manager.RyuApp):
                          'max_speed=%d' %
                          (p.port_no, p.hw_addr,
                           p.name, p.config,
-                          p.state, p.curr, p.advertised,
-                          p.supported, p.peer, p.curr_speed,
-                          p.max_speed))
+                          p.state, p.properties[0].curr, p.properties[0].advertised,
+                          p.properties[0].supported, p.properties[0].peer, p.properties[0].curr_speed,
+                          p.properties[0].max_speed))
 
             if p.config in config_dict:
                 config = config_dict[p.config]
@@ -686,7 +713,7 @@ class SimpleSwitch15(app_manager.RyuApp):
                 state = "up"
 
             # Recording data.
-            port_feature = (config, state, p.curr_speed)
+            port_feature = (config, state, p.properties[0].curr_speed)
             self.port_features[dpid][p.port_no] = port_feature
 
     @set_ev_cls(ofp_event.EventOFPPortStatus, MAIN_DISPATCHER)
@@ -1156,6 +1183,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             lists of simple paths, in order from shortest to longest.
         """
         shortest_paths = self.shortest_paths
+        #print shortest_paths
         # Create bandwidth-sensitive datapath graph.
         graph = self.graph
 
@@ -1166,10 +1194,10 @@ class SimpleSwitch15(app_manager.RyuApp):
             # so we just need to call it once in a period, and then, we can get path directly.
             # If path is existed just return it, else calculate and return it.
             try:
-                path = self.monitor.best_paths.get(src).get(dst)
+                path = self.best_paths.get(src).get(dst)
                 return path
             except:
-                result = self.monitor.get_best_path_by_bw(graph, shortest_paths)
+                result = self.get_best_path_by_bw(graph, shortest_paths)
                 # result = (capabilities, best_paths)
                 paths = result[1]
                 best_path = paths.get(src).get(dst)
@@ -1214,44 +1242,14 @@ class SimpleSwitch15(app_manager.RyuApp):
                     flow_info = (eth_type, ip_src, ip_dst, in_port)
                 # Install flow entries to datapaths along the path.
                 self.install_flow(self.datapaths,
-                                  self.awareness.link_to_port,
+                                  self.link_to_port,
                                   path, flow_info, msg.buffer_id, msg.data)
         else:
             # Flood is not good.
             self.flood(msg)
 
 
-    def show_topology(self):
-        if self.pre_link_to_port != self.link_to_port and True:
-            # It means the link_to_port table has changed.
-            _graph = self.graph.copy()
-            print "\n---------------------Link Port---------------------"
-            print '%6s' % ('switch'),
-            for node in sorted([node for node in _graph.nodes()], key=lambda node: node):
-                print '%6d' % node,
-            print
-            for node1 in sorted([node for node in _graph.nodes()], key=lambda node: node):
-                print '%6d' % node1,
-                for node2 in sorted([node for node in _graph.nodes()], key=lambda node: node):
-                    if (node1, node2) in self.link_to_port.keys():
-                        print '%6s' % str(self.link_to_port[(node1, node2)]),
-                    else:
-                        print '%6s' % '/',
-                print
-            print
-            self.pre_link_to_port = self.link_to_port.copy()
-
-        if self.pre_access_table != self.access_table and True:
-            # It means the access_table has changed.
-            print "\n----------------Access Host-------------------"
-            print '%10s' % 'switch', '%10s' % 'port', '%22s' % 'Host'
-            if not self.access_table.keys():
-                print "    NO found host"
-            else:
-                for sw in sorted(self.access_table.keys()):
-                    print '%10d' % sw[0], '%10d      ' % sw[1], self.access_table[sw]
-            print
-            self.pre_access_table = self.access_table.copy()
+    
 
     def show_stat(self, _type):
         '''
@@ -1291,7 +1289,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             _format = '%8d  %4x  %9d  %11d  %9d  %11d  %13d  %15.1f  %17.1f  %10s  %10s'
             for dpid in sorted(bodys.keys()):
                 for stat in sorted(bodys[dpid], key=attrgetter('port_no')):
-                    if stat.port_no != ofproto_v1_3.OFPP_LOCAL:
+                    if stat.port_no != ofproto_v1_4.OFPP_LOCAL:
                         print(_format % (
                             dpid, stat.port_no,
                             stat.rx_packets, stat.rx_bytes,

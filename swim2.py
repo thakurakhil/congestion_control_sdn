@@ -396,7 +396,7 @@ def main():
     controller = RemoteController('c1', ip='127.0.0.1', port=args.cport)
     #topo = DCTopo()
     topo = ExperimentTopo()
-    switch = partial(OVSSwitch, protocols='OpenFlow15')
+    switch = partial(OVSSwitch, protocols='OpenFlow14')
     net = Mininet(topo=topo, link=TCLink, autoSetMacs=True, autoStaticArp=True, controller=controller, switch=switch)
     #net = Mininet(topo=topo, link=TCLink, autoSetMacs=True, switch=switch, controller = controller)
     #net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink, switch=switch, autoStaticArp=True)
