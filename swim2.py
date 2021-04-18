@@ -347,7 +347,7 @@ def display_countdown(nseconds):
         sleep(5)
         now = time()
         delta = now - start_time
-        if delta > nseconds:
+        if delta >= nseconds:
             break
         print "%.1fs left..." % (nseconds - delta)
 
@@ -377,9 +377,9 @@ def netperf_setup(h1, h2):
 
 def iperf_setup(h1, h2, ports):
     #runner(h2.popen, noproc=False)("killall iperf3")
-    h2.popen("killall iperf3",shell=True)
+    #h2.popen("killall iperf3",shell=True)
     #h2['runner']("killall iperf3")
-    sleep(1) # make sure ports can be reused
+    #sleep(1) # make sure ports can be reused
     for port in ports:
         # -s: server
         # -p [port]: port
@@ -423,22 +423,24 @@ def start_side_flows(net, num_flows, time_btwn_flows, flow_type, cong,
         netperf_setup(h21, h51)
         flow_commands = netperf_commands
     else:
-        iperf_setup(h21, h51, [base_port + i for i in range(num_flows)])
-        #iperf_setup(h22, h51, [base_port + i for i in range(num_flows)])
-        #iperf_setup(h23, h51, [base_port + i for i in range(num_flows)])
+        h51.popen("killall iperf3",shell=True)
+        sleep(1)
+        iperf_setup(h21, h51, [base_port + 0 for i in range(num_flows)])
+        iperf_setup(h22, h51, [base_port + 1 for i in range(num_flows)])
+        iperf_setup(h23, h51, [base_port + 2 for i in range(num_flows)])
         flow_commands = iperf_commands
 
     
     def start_side_flow(i):
         if pre_flow_action is not None:
             pre_flow_action(net, i, base_port + i) #check here when increasing number of flows
-        flow_commands(i, h21, h51, base_port + i, cong[i],
+        flow_commands(1, h21, h51, base_port + 0, cong[i],
                       args.time - time_btwn_flows * i,
                       args.dir, delay=i*time_btwn_flows)
-        flow_commands(i, h22, h51, base_port + i, cong[i],
+        flow_commands(2, h22, h51, base_port + 1, cong[i],
                       args.time - time_btwn_flows * i,
                       args.dir, delay=i*time_btwn_flows)
-        flow_commands(i, h23, h51, base_port + i, cong[i],
+        flow_commands(3, h23, h51, base_port + 2, cong[i],
                       args.time - time_btwn_flows * i,
                       args.dir, delay=i*time_btwn_flows)
         
@@ -466,6 +468,8 @@ def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
         netperf_setup(h1, h2)
         flow_commands = netperf_commands
     else:
+        h2.popen("killall iperf3",shell=True)
+        sleep(1)
         iperf_setup(h1, h2, [base_port + i for i in range(num_flows)])
         flow_commands = iperf_commands
 
@@ -473,7 +477,7 @@ def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
     def start_flow(i):
         if pre_flow_action is not None:
             pre_flow_action(net, i, base_port + i) #check here when increasing number of flows
-        flow_commands(i, h1, h2, base_port + i, cong[i],
+        flow_commands(0, h1, h2, base_port + i, cong[i],
                       args.time - time_btwn_flows * i,
                       args.dir, delay=i*time_btwn_flows)
         flow = {
@@ -549,9 +553,12 @@ def main():
     filter_capture(main_filter,
                    "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_1.dmp".format(args.dir)) 
 
-    side_send_filter = "src 10.1.2.1 and dst 10.1.1.1 and dst port 2345"
+    side_send_filter = "src 10.1.2.1 and dst 10.1.5.1 and dst port 2345"
     side_receive_filter = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
     side_filter = '"({}) or ({})"'.format(side_send_filter, side_receive_filter)
+    
+    display_countdown(5)
+    
     print "Filtering PCC flow of 2 and 5..."
     filter_capture(side_filter,
                    "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_2.dmp".format(args.dir)) 
