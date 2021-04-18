@@ -269,9 +269,9 @@ class SimpleSwitch15(app_manager.RyuApp):
             free_bw = self._get_free_bw(capacity, speed)
             self.free_bandwidth[dpid].setdefault(port_no, None)
             self.free_bandwidth[dpid][port_no] = free_bw
-            if(free_bw <= MAX_CAPACITY - THRESH_CAP):
+            #if(free_bw <= MAX_CAPACITY - THRESH_CAP):
                 #self.trigger_bw_red(dpid, port_no)
-                self.trigger_bw_red_sw1()
+                #self.trigger_bw_red_sw1()
         else:
             self.logger.info("Port is Down")
 

@@ -29,15 +29,17 @@ import sched
 import socket
 import sys
 
+import threading
+
 
 parser = ArgumentParser(description="Swimming")
 
 
 parser.add_argument('--dir', '-d',
                     help="Directory to store outputs",
-                    default="./results")
+                    default="./resultsNew")
 parser.add_argument('--time', '-t',
-                    help="Duration (sec) to run the experiment",
+                    help="Duration (sec) to run each experiment",
                     type=int,
                     default=10)
 parser.add_argument('--cport', '-c',
@@ -323,6 +325,13 @@ def start_capture(outfile="capture.dmp", interface=""):
     monitor.start()
     return monitor
 
+def start_side_flows_thread(net, num_flows, time_btwn_flows, flow_type, cong,
+                pre_flow_action=None, flow_monitor=None):
+    monitor = Process(target=start_side_flows,
+                      args=(net, num_flows, time_btwn_flows, flow_type, cong,
+                            pre_flow_action, flow_monitor))
+    monitor.start()
+    return monitor
 
 def filter_capture(filter_pattern, infile="capture.dmp", outfile="filtered.dmp"):
     monitor = Process(target=filter_packets,
@@ -399,6 +408,50 @@ def iperf_commands(index, h1, h2, port, cong, duration, outdir, delay=0):
     h1.popen(client, shell=True)
     #h1['runner'](client, background=True)
 
+def start_side_flows(net, num_flows, time_btwn_flows, flow_type, cong,
+                pre_flow_action=None, flow_monitor=None):
+    h21 = net.get("h010201")
+    h22 = net.get("h010202")
+    h23 = net.get("h010203")
+    h51 = net.get("h010501")
+
+    print "Starting {} side flows...".format(cong)
+    flows = []
+    base_port = 2345
+
+    if flow_type == 'netperf':
+        netperf_setup(h21, h51)
+        flow_commands = netperf_commands
+    else:
+        iperf_setup(h21, h51, [base_port + i for i in range(num_flows)])
+        #iperf_setup(h22, h51, [base_port + i for i in range(num_flows)])
+        #iperf_setup(h23, h51, [base_port + i for i in range(num_flows)])
+        flow_commands = iperf_commands
+
+    
+    def start_side_flow(i):
+        if pre_flow_action is not None:
+            pre_flow_action(net, i, base_port + i) #check here when increasing number of flows
+        flow_commands(i, h21, h51, base_port + i, cong[i],
+                      args.time - time_btwn_flows * i,
+                      args.dir, delay=i*time_btwn_flows)
+        flow_commands(i, h22, h51, base_port + i, cong[i],
+                      args.time - time_btwn_flows * i,
+                      args.dir, delay=i*time_btwn_flows)
+        flow_commands(i, h23, h51, base_port + i, cong[i],
+                      args.time - time_btwn_flows * i,
+                      args.dir, delay=i*time_btwn_flows)
+        
+    #s.enter(delay, priority, action, argument=(), kwargs={})
+    s = sched.scheduler(time, sleep)
+    for i in range(num_flows):
+        if flow_type == 'iperf':
+            s.enter(i * time_btwn_flows, 1, start_side_flow, [i])
+        else:
+            s.enter(0, i, start_side_flow, [i])
+    s.run()
+    return
+
 def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
                 pre_flow_action=None, flow_monitor=None):
     h1 = net.get("h010101")
@@ -435,6 +488,7 @@ def start_flows(net, num_flows, time_btwn_flows, flow_type, cong,
         if flow_monitor:
             flow['monitor'] = flow_monitor(net, i, base_port + i)
         flows.append(flow)
+    #s.enter(delay, priority, action, argument=(), kwargs={})
     s = sched.scheduler(time, sleep)
     for i in range(num_flows):
         if flow_type == 'iperf':
@@ -469,75 +523,86 @@ def main():
     install_proactive_flows(net, topo)
     dumpNodeConnections(net.hosts) #diagnostic thing
     #net.pingAll()
-
-    """
+    display_countdown(30)
+    
     n_iperf_flows = 1
     time_btwn_flows = 0
-    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
-    flows = None
+    #flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    #flows = None
 
-    
     cap = start_capture("{}/capture_pcc.dmp".format(args.dir))
+    side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    #side_flows_thread = threading.Thread(target = start_side_flows, (net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None) )
+    #side_flows_thread.start()
+    #side_flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+
+
     flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     display_countdown(args.time + 5)
     Popen("killall tcpdump", shell=True)
     cap.join()
     
-    for flow in flows:
-        if flow['filter']:
-            print "Filtering PCC flow {}...".format(flow['index'])
-            filter_capture(flow['filter'],
-                           "{}/capture_pcc.dmp".format(args.dir),
-                           "{}/flow_pcc_{}.dmp".format(args.dir, flow['index'])) 
-        if flow['monitor'] is not None:
-            flow['monitor'].terminate()
+    main_send_filter = "src 10.1.1.1 and dst 10.1.4.1 and dst port 2345"
+    main_receive_filter = "src 10.1.4.1 and dst 10.1.1.1 and src port 2345"
+    main_filter = '"({}) or ({})"'.format(main_send_filter, main_receive_filter)
+    print "Filtering PCC flow of 1 and 4..."
+    filter_capture(main_filter,
+                   "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_1.dmp".format(args.dir)) 
+
+    side_send_filter = "src 10.1.2.1 and dst 10.1.1.1 and dst port 2345"
+    side_receive_filter = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
+    side_filter = '"({}) or ({})"'.format(side_send_filter, side_receive_filter)
+    print "Filtering PCC flow of 2 and 5..."
+    filter_capture(side_filter,
+                   "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_2.dmp".format(args.dir)) 
+
 
      
-    n_iperf_flows = 1
-    time_btwn_flows = 0
+    # n_iperf_flows = 1
+    # time_btwn_flows = 0
 
-    cap = start_capture("{}/capture_cubic.dmp".format(args.dir), "")
-    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["cubic"], pre_flow_action=None)
-    display_countdown(args.time + 5)
-    Popen("killall tcpdump", shell=True)
-    cap.join()
+    # cap = start_capture("{}/capture_cubic.dmp".format(args.dir), "")
+    # flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["cubic"], pre_flow_action=None)
+    # display_countdown(args.time + 5)
+    # Popen("killall tcpdump", shell=True)
+    # cap.join()
 
-    for flow in flows:
-        if flow['filter']:
-            print "Filtering cubic flow {}...".format(flow['index'])
-            filter_capture(flow['filter'],
-                           "{}/capture_cubic.dmp".format(args.dir),
-                           "{}/flow_cubic_{}.dmp".format(args.dir, flow['index'])) 
-        if flow['monitor'] is not None:
-            flow['monitor'].terminate()
+    # for flow in flows:
+    #     if flow['filter']:
+    #         print "Filtering cubic flow {}...".format(flow['index'])
+    #         filter_capture(flow['filter'],
+    #                        "{}/capture_cubic.dmp".format(args.dir),
+    #                        "{}/flow_cubic_{}.dmp".format(args.dir, flow['index'])) 
+    #     if flow['monitor'] is not None:
+    #         flow['monitor'].terminate()
 
-    #filter_capture(flows[0]['filter'],"{}/capture_cubic.dmp".format(args.dir),"{}/flow_cubic.dmp".format(args.dir))
+    # #filter_capture(flows[0]['filter'],"{}/capture_cubic.dmp".format(args.dir),"{}/flow_cubic.dmp".format(args.dir))
     
 
-    n_iperf_flows = 1
-    time_btwn_flows = 0
+    # n_iperf_flows = 1
+    # time_btwn_flows = 0
 
-    cap = start_capture("{}/capture_bbr.dmp".format(args.dir))
-    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["bbr"], pre_flow_action=None,flow_monitor=iperf_bbr_mon)
-    display_countdown(args.time + 5)
-    Popen("killall tcpdump", shell=True)
-    cap.join()
+    # cap = start_capture("{}/capture_bbr.dmp".format(args.dir))
+    # flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["bbr"], pre_flow_action=None,flow_monitor=iperf_bbr_mon)
+    # display_countdown(args.time + 5)
+    # Popen("killall tcpdump", shell=True)
+    # cap.join()
     
-    for flow in flows:
-        if flow['filter']:
-            print "Filtering BBR flow {}...".format(flow['index'])
-            filter_capture(flow['filter'],
-                           "{}/capture_bbr.dmp".format(args.dir),
-                           "{}/flow_bbr_{}.dmp".format(args.dir, flow['index'])) 
-        if flow['monitor'] is not None:
-            flow['monitor'].terminate()
+    # for flow in flows:
+    #     if flow['filter']:
+    #         print "Filtering BBR flow {}...".format(flow['index'])
+    #         filter_capture(flow['filter'],
+    #                        "{}/capture_bbr.dmp".format(args.dir),
+    #                        "{}/flow_bbr_{}.dmp".format(args.dir, flow['index'])) 
+    #     if flow['monitor'] is not None:
+    #         flow['monitor'].terminate()
 
     #filter_capture(flows[0]['filter'],"{}/capture_bbr.dmp".format(args.dir),"{}/flow_bbr.dmp".format(args.dir))
     
     
 
     #filter_capture(flows[0]['filter'],"{}/capture_pcc.dmp".format(args.dir),"{}/flow_pcc.dmp".format(args.dir))
-    """            
+                
 
     # trigger a pingAllFull to solve the ARP and the delay associated
     CLI(net)
