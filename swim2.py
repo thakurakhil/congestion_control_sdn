@@ -240,6 +240,34 @@ class DCTopo(Topo):
         self.addHost(hostname, ip='10.2.1.1', mac='00:00:00:02:01:01')
         self.addLink('tor3', hostname, **tor_lconfig)    
 
+def insert_flow_cmd(switch, ip, dst_port):
+    cmd_arp = "ovs-ofctl add-flow %s -O OpenFlow14 \
+                'table=0,idle_timeout=0,hard_timeout=0,priority=10,arp, \
+                nw_dst=%s,actions=output:%d'" % (switch, ip, dst_port)
+    os.system(cmd_arp)
+
+    cmd_ip = "ovs-ofctl add-flow %s -O OpenFlow14 \
+                'table=0,idle_timeout=0,hard_timeout=0,priority=10,ip, \
+                nw_dst=%s,actions=output:%d'" % (switch, ip, dst_port)
+    os.system(cmd_ip)
+    return
+
+def install_proactive_flows(net, topo):
+    #switch sw1
+    insert_flow_cmd("sw1", "10.1.1.1",3)
+
+    #switch sw2
+    insert_flow_cmd("sw2", "10.1.2.1",3)
+    insert_flow_cmd("sw2", "10.1.2.2",4)
+    insert_flow_cmd("sw2", "10.1.2.3",5)
+
+    #switch sw7
+    insert_flow_cmd("sw7", "10.1.3.1",3)
+    insert_flow_cmd("sw7", "10.1.3.2",4)
+
+    #switch sw4
+    insert_flow_cmd("sw4", "10.1.4.1",4)
+
 #specific monitor for bbr parameters obtained from comand ss
 def start_bbrmon(dst, interval_sec=0.1, outfile="bbr.txt", runner=None):
     monitor = Process(target=monitor_bbr,
@@ -404,7 +432,7 @@ def main():
 
     # Start the network
     net.start()
-    
+    install_proactive_flows(net, topo)
     dumpNodeConnections(net.hosts) #diagnostic thing
     #net.pingAll()
 

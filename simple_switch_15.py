@@ -15,6 +15,7 @@
 from __future__ import division
 
 import matplotlib.pyplot as plt
+import array
 import time
 import copy
 
@@ -149,10 +150,11 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
         while self.weight == 'bw':
             self.graph = self.create_bw_graph(self.free_bandwidth)
-            self.logger.debug("save free bandwidth")
+            self.logger.debug("save free bandwidth in graph")
             hub.sleep(5)
     
     def show_topology(self):
+        self.logger.info("inside show topology")
         if self.pre_link_to_port != self.link_to_port:
             # It means the link_to_port table has changed.
             _graph = self.graph.copy()
@@ -284,16 +286,16 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
             Sending request msg to datapath
         """
-        self.logger.debug('send stats request: %016x', datapath.id)
-        ofp = ofproto_v1_4
+        self.logger.info('send stats request: %016x', datapath.id)
+        #ofp = ofproto_v1_4
         ofproto = datapath.ofproto
-        ofp_parser = ofproto_v1_4_parser
-        #parser = datapath.ofproto_parser
-        req = ofp_parser.OFPPortDescStatsRequest(datapath, 0)
+        #ofp_parser = ofproto_v1_4_parser
+        parser = datapath.ofproto_parser
+        req = parser.OFPPortDescStatsRequest(datapath, 0)
         datapath.send_msg(req)
-        req = ofp_parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
+        req = parser.OFPPortStatsRequest(datapath, 0, ofproto.OFPP_ANY)
         datapath.send_msg(req)
-        req = ofp_parser.OFPFlowStatsRequest(datapath)
+        req = parser.OFPFlowStatsRequest(datapath)
         datapath.send_msg(req)
 
     def get_min_bw_of_links(self, graph, path, min_bw):
@@ -364,13 +366,16 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.create_port_map(switch_list)
         self.switches = [sw.dp.id for sw in switch_list]
         links = get_link(self.topology_api_app, None)
+        #print(links)
         self.create_interior_links(links)
         self.create_access_ports()
         self.graph = self.get_graph(self.link_to_port.keys())
         self.shortest_paths = self.all_k_shortest_paths(
             self.graph, weight='weight', k=4)
+        print("shortest paths array :: ")
         print self.shortest_paths
         self.logger.info("[DONE NETWORK TOPOLOGY]")
+    
     def create_port_map(self, switch_list):
         """
             Create interior_port table and access_port table.
@@ -384,12 +389,15 @@ class SimpleSwitch15(app_manager.RyuApp):
             for port in sw.ports:
                 # switch_port_table = {dpid:set(port_num,),}
                 self.switch_port_table[dpid].add(port.port_no)
+        print("switch port table ::  ") 
+        print(self.switch_port_table)
 
     def create_interior_links(self, link_list):
         """
             Get links' srouce port to dst port  from link_list.
             link_to_port = {(src_dpid,dst_dpid):(src_port,dst_port),}
         """
+        #print(link_list)
         for link in link_list:
             src = link.src
             dst = link.dst
@@ -399,6 +407,9 @@ class SimpleSwitch15(app_manager.RyuApp):
                 self.interior_ports[link.src.dpid].add(link.src.port_no)
             if link.dst.dpid in self.switches:
                 self.interior_ports[link.dst.dpid].add(link.dst.port_no)
+        print("interior link ports ::  ") 
+        print(self.link_to_port)
+    
 
     def create_access_ports(self):
         """
@@ -409,6 +420,9 @@ class SimpleSwitch15(app_manager.RyuApp):
             interior_port = self.interior_ports[sw]
             # That comes the access port of the switch.
             self.access_ports[sw] = all_port_table - interior_port
+        print("access port table ::  ") 
+        print(self.access_ports)
+
 
     def get_graph(self, link_list):
         """
@@ -440,7 +454,7 @@ class SimpleSwitch15(app_manager.RyuApp):
                 k -= 1
             return shortest_paths
         except:
-            self.logger.debug("No path between %s and %s" % (src, dst))
+            self.logger.info("No path between %s and %s" % (src, dst))
 
     def all_k_shortest_paths(self, graph, weight='weight', k=5):
         """
@@ -470,11 +484,11 @@ class SimpleSwitch15(app_manager.RyuApp):
         datapath = ev.datapath
         if ev.state == MAIN_DISPATCHER:
             if datapath.id not in self.datapaths:
-                self.logger.debug('register datapath: %016x', datapath.id)
+                self.logger.info('register datapath: %016x', datapath.id)
                 self.datapaths[datapath.id] = datapath
         elif ev.state == DEAD_DISPATCHER:
             if datapath.id in self.datapaths:
-                self.logger.debug('unregister datapath: %016x', datapath.id)
+                self.logger.info('unregister datapath: %016x', datapath.id)
                 del self.datapaths[datapath.id]
 
     # def _monitor(self):
@@ -488,7 +502,7 @@ class SimpleSwitch15(app_manager.RyuApp):
     @set_ev_cls(ofp_event.EventOFPErrorMsg,[HANDSHAKE_DISPATCHER, CONFIG_DISPATCHER, MAIN_DISPATCHER])
     def error_msg_handler(self, ev):
         msg = ev.msg
-        self.logger.debug('OFPErrorMsg received: type=0x%02x code=0x%02x '
+        self.logger.info('OFPErrorMsg received: type=0x%02x code=0x%02x '
                           'message=%s',
                           msg.type, msg.code, utils.hex_array(msg.data))
 
@@ -744,7 +758,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         datapath = ev.msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-        
+        self.logger.info("switch:%s connected", datapath.id)
 
         # install table-miss flow entry
         #
@@ -915,11 +929,13 @@ class SimpleSwitch15(app_manager.RyuApp):
             self.logger.info("Path error!")
             return
         in_port = flow_info[3]
+        dst_ip = flow_info[2]
         first_dp = datapaths[path[0]]
         out_port = first_dp.ofproto.OFPP_LOCAL
+        hops = len(path)
 
         # Install flow entry for intermediate datapaths.
-        for i in range(1, (len(path) - 1) / 2):
+        for i in range(1, ((len(path) - 1) )):
             port = self.get_port_pair_from_link(link_to_port, path[i-1], path[i])
             port_next = self.get_port_pair_from_link(link_to_port, path[i], path[i+1])
             if port and port_next:
@@ -934,6 +950,14 @@ class SimpleSwitch15(app_manager.RyuApp):
             return
         out_port = port_pair[0]
         self.send_flow_mod(first_dp, flow_info, in_port, out_port)
+
+        # #  Install flow entry for the last datapath.
+        # port_pair = self.get_port_pair_from_link(link_to_port, path[0], path[1])
+        # if port_pair is None:
+        #     self.logger.info("Port not found in first hop.")
+        #     return
+        # out_port = port_pair[0]
+        # self.send_flow_mod(first_dp, flow_info, in_port, out_port)
         # Send packet_out to the first datapath.
         self.send_packet_out(first_dp, buffer_id, in_port, out_port, data)
 
@@ -956,7 +980,7 @@ class SimpleSwitch15(app_manager.RyuApp):
                         datapath, ofproto.OFP_NO_BUFFER,
                         ofproto.OFPP_CONTROLLER, port, msg.data)
                     datapath.send_msg(out)
-        self.logger.debug("Flooding packet to access port")
+        self.logger.info("Flooding packet to access port")
 
 
     def register_access_info(self, dpid, in_port, ip, mac):
@@ -973,9 +997,11 @@ class SimpleSwitch15(app_manager.RyuApp):
             else:
                 self.access_table.setdefault((dpid, in_port), None)
                 self.access_table[(dpid, in_port)] = (ip, mac)
+                self.logger.info("Registering access info")
+                print("dpid - " + str(dpid) + " , in_port - " + str(in_port) + " :: ip - " + str(ip) + " , mac - " + str(mac))
                 return
 
-    def add_flow(self, datapath, priority, match, actions):
+    def add_flow(self, datapath, priority, match, actions, idle_timeout=0, hard_timeout=0):
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
 
@@ -983,7 +1009,9 @@ class SimpleSwitch15(app_manager.RyuApp):
                                              actions)]
 
         mod = parser.OFPFlowMod(datapath=datapath, priority=priority,
-                                match=match, instructions=inst)
+                                match=match, instructions=inst,
+                                idle_timeout=idle_timeout,
+                                hard_timeout=hard_timeout,)
         datapath.send_msg(mod)
 
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
@@ -996,25 +1024,37 @@ class SimpleSwitch15(app_manager.RyuApp):
         # https://ryu.readthedocs.io/en/latest/ofproto_v1_5_ref.html#ryu.ofproto.ofproto_v1_5_parser.OFPMatch
 
         pkt = packet.Packet(msg.data)
+        #pkt1 = packet.Packet(array.array('B', msg.data))
         eth = pkt.get_protocols(ethernet.ethernet)[0]
         arp_pkt = pkt.get_protocol(arp.arp)
         ip_pkt = pkt.get_protocol(ipv4.ipv4)
 
-        if isinstance(arp_pkt, arp.arp):
+        #if eth.ethertype == ether_types.ETH_TYPE_LLDP:
+             # ignore lldp packet
+        #     return
+        #self.register_access_info(datapath.id, in_port, ip_src_ip, mac)
+        #for p in pkt1.protocols:
+        #    print(p)
+        #self.logger.info("Packet processing")
+        #self.logger.info("packet in %s %s %s %s", datapath.id, eth.src, eth.dst, in_port)
+
+        if arp_pkt:
             arp_src_ip = arp_pkt.src_ip
             mac = arp_pkt.src_mac
             # Record the access infomation.
+            self.logger.info("ARP processing")
             self.register_access_info(datapath.id, in_port, arp_src_ip, mac)
-            self.logger.debug("ARP processing")
+            
             self.arp_forwarding(msg, arp_pkt.src_ip, arp_pkt.dst_ip)
 
-        elif isinstance(ip_pkt, ipv4.ipv4):
+        elif ip_pkt:
             ip_src_ip = ip_pkt.src
             eth = pkt.get_protocols(ethernet.ethernet)[0]
             mac = eth.src
             # Record the access infomation.
+            self.logger.info("IPV4 processing")
             self.register_access_info(datapath.id, in_port, ip_src_ip, mac)
-            self.logger.debug("IPV4 processing")
+            
             if len(pkt.get_protocols(ethernet.ethernet)):
                 eth_type = pkt.get_protocols(ethernet.ethernet)[0].ethertype
                 self.shortest_forwarding(msg, eth_type, ip_pkt.src, ip_pkt.dst)
@@ -1170,7 +1210,7 @@ class SimpleSwitch15(app_manager.RyuApp):
                                          ofproto.OFPP_CONTROLLER,
                                          out_port, msg.data)
             datapath.send_msg(out)
-            self.logger.debug("Deliver ARP packet to knew host")
+            self.logger.log("Deliver ARP packet to know host")
         else:
             # Flood is not good.
             self.flood(msg)
@@ -1235,10 +1275,10 @@ class SimpleSwitch15(app_manager.RyuApp):
                         L4_Proto = 'UDP'
                     else:
                         pass
-                    self.logger.info("[PATH]%s<-->%s(%s Port:%d): %s" % (ip_src, ip_dst, L4_Proto, L4_port, path))
+                    self.logger.info("[PATH] switch : %s :: %s<-->%s(%s Port:%d): %s" % (datapath.id, ip_src, ip_dst, L4_Proto, L4_port, path))
                     flow_info = (eth_type, ip_src, ip_dst, in_port, ip_proto, Flag, L4_port)
                 else:
-                    self.logger.info("[PATH]%s<-->%s: %s" % (ip_src, ip_dst, path))
+                    self.logger.info("[PATH] switch : %s :: %s<-->%s: %s" % (datapath.id, ip_src, ip_dst, path))
                     flow_info = (eth_type, ip_src, ip_dst, in_port)
                 # Install flow entries to datapaths along the path.
                 self.install_flow(self.datapaths,
