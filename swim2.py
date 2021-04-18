@@ -107,6 +107,10 @@ class ExperimentTopo(Topo):
             'bw':    1000,
             'delay': '1ms'
         }
+        link_lconfig5 = {
+            'bw':    1000,
+            'delay': '1ms'
+        }
         
 
         """Configure the port and set its properties.
@@ -133,6 +137,10 @@ class ExperimentTopo(Topo):
         self.addSwitch('sw5', dpid='0000000000000005', **switch_config)
         self.addSwitch('sw6', dpid='0000000000000006', **switch_config)
         self.addSwitch('sw7', dpid='0000000000000007', **switch_config)
+        self.addSwitch('sw8', dpid='0000000000000008', **switch_config)
+        self.addSwitch('sw9', dpid='0000000000000009', **switch_config)
+        self.addSwitch('sw10', dpid='000000000000000A', **switch_config)
+
 
         # Connect the switches together
         self.addLink('sw1', 'sw2', **switch_lconfig1)
@@ -140,9 +148,12 @@ class ExperimentTopo(Topo):
         self.addLink('sw3', 'sw4', **switch_lconfig1)
         self.addLink('sw1', 'sw5', **switch_lconfig1)
         self.addLink('sw5', 'sw6', **switch_lconfig2)
-        self.addLink('sw6', 'sw4', **switch_lconfig2)
+        self.addLink('sw6', 'sw8', **switch_lconfig2)
+        self.addLink('sw8', 'sw4', **switch_lconfig2)
         self.addLink('sw5', 'sw7', **switch_lconfig3)
-        self.addLink('sw7', 'sw4', **switch_lconfig3)
+        self.addLink('sw7', 'sw9', **switch_lconfig3)
+        self.addLink('sw9', 'sw10', **switch_lconfig3)
+        self.addLink('sw10', 'sw4', **switch_lconfig3)
 
         # the 7 hosts
         host_format = 'h{:02x}{:02x}{:02x}'
@@ -164,6 +175,9 @@ class ExperimentTopo(Topo):
 
         self.addHost('h010401', ip='10.1.4.1', mac='00:00:00:01:04:01')
         self.addLink('sw4', 'h010401', **link_lconfig4)
+
+        self.addHost('h010501', ip='10.1.5.1', mac='00:00:00:01:05:01')
+        self.addLink('sw3', 'h010501', **link_lconfig5)
 
 
 class DCTopo(Topo):
@@ -240,33 +254,53 @@ class DCTopo(Topo):
         self.addHost(hostname, ip='10.2.1.1', mac='00:00:00:02:01:01')
         self.addLink('tor3', hostname, **tor_lconfig)    
 
-def insert_flow_cmd(switch, ip, dst_port):
+def insert_flow_cmd(switch, ip, in_port, dst_port):
     cmd_arp = "ovs-ofctl add-flow %s -O OpenFlow14 \
                 'table=0,idle_timeout=0,hard_timeout=0,priority=10,arp, \
-                nw_dst=%s,actions=output:%d'" % (switch, ip, dst_port)
+                nw_dst=%s,in_port=%d,actions=output:%d'" % (switch, ip, in_port, dst_port)
     os.system(cmd_arp)
 
     cmd_ip = "ovs-ofctl add-flow %s -O OpenFlow14 \
                 'table=0,idle_timeout=0,hard_timeout=0,priority=10,ip, \
-                nw_dst=%s,actions=output:%d'" % (switch, ip, dst_port)
+                nw_dst=%s,in_port=%d,actions=output:%d'" % (switch, ip, in_port, dst_port)
     os.system(cmd_ip)
     return
 
 def install_proactive_flows(net, topo):
     #switch sw1
-    insert_flow_cmd("sw1", "10.1.1.1",3)
+    insert_flow_cmd("sw1", "10.1.1.1", 1, 3)
+    insert_flow_cmd("sw1", "10.1.1.1", 2, 3)
 
     #switch sw2
-    insert_flow_cmd("sw2", "10.1.2.1",3)
-    insert_flow_cmd("sw2", "10.1.2.2",4)
-    insert_flow_cmd("sw2", "10.1.2.3",5)
+    insert_flow_cmd("sw2", "10.1.2.1", 1, 3)
+    insert_flow_cmd("sw2", "10.1.2.1", 2, 3)
+    insert_flow_cmd("sw2", "10.1.2.1", 4, 3)
+    insert_flow_cmd("sw2", "10.1.2.1", 5, 3)
+    insert_flow_cmd("sw2", "10.1.2.2", 1, 4)
+    insert_flow_cmd("sw2", "10.1.2.2", 2, 4)
+    insert_flow_cmd("sw2", "10.1.2.2", 3, 4)
+    insert_flow_cmd("sw2", "10.1.2.2", 5, 4)
+    insert_flow_cmd("sw2", "10.1.2.3", 1, 5)
+    insert_flow_cmd("sw2", "10.1.2.3", 2, 5)
+    insert_flow_cmd("sw2", "10.1.2.3", 3, 5)
+    insert_flow_cmd("sw2", "10.1.2.3", 4, 5)
+
+    # switch sw3
+    insert_flow_cmd("sw3", "10.1.5.1", 1, 3)
+    insert_flow_cmd("sw3", "10.1.5.1", 2, 3)
 
     #switch sw7
-    insert_flow_cmd("sw7", "10.1.3.1",3)
-    insert_flow_cmd("sw7", "10.1.3.2",4)
+    insert_flow_cmd("sw7", "10.1.3.1", 1, 3)
+    insert_flow_cmd("sw7", "10.1.3.1", 2, 3)
+    insert_flow_cmd("sw7", "10.1.3.1", 4, 3)
+    insert_flow_cmd("sw7", "10.1.3.2", 1, 4)
+    insert_flow_cmd("sw7", "10.1.3.2", 2, 4)
+    insert_flow_cmd("sw7", "10.1.3.2", 3, 4)
 
     #switch sw4
-    insert_flow_cmd("sw4", "10.1.4.1",4)
+    insert_flow_cmd("sw4", "10.1.4.1", 1, 4)
+    insert_flow_cmd("sw4", "10.1.4.1", 2, 4)
+    insert_flow_cmd("sw4", "10.1.4.1", 3, 4)
 
 #specific monitor for bbr parameters obtained from comand ss
 def start_bbrmon(dst, interval_sec=0.1, outfile="bbr.txt", runner=None):

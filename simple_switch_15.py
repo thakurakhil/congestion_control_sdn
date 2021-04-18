@@ -43,6 +43,7 @@ from ryu.topology import event, switches
 import networkx as nx
 
 from ryu import utils
+from threading import Timer
 
 # Check https://osrg.github.io/ryu-book/en/html/traffic_monitor.html
 # 1414bb8be75b83033d6b721e8600f674da719307
@@ -60,6 +61,7 @@ from ryu import utils
 
 
 MAX_CAPACITY = 10000
+THRESH_CAP = 7000
 
 class SimpleSwitch15(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_4.OFP_VERSION]
@@ -102,7 +104,8 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.pre_access_table = {}
         self.graph = nx.DiGraph()
         # Get initiation delay.
-        self.initiation_delay = 20
+        self.initiation_delay = 10
+        self.initiation_delay_route = 30
         self.start_time = time.time()
         self.discover_thread = hub.spawn(self._discover)
 
@@ -119,12 +122,24 @@ class SimpleSwitch15(app_manager.RyuApp):
         #self.graph = None
         self.capabilities = None
         self.best_paths = None
-
+        self.flagitty = 1
         # Start to green thread to monitor traffic and calculating
         # free bandwidth of links respectively.
         self.monitor_thread = hub.spawn(self._monitorTraffic)
         self.save_freebandwidth_thread = hub.spawn(self._save_bw_graph)
+        #t = Timer(35.0, self._reroute)
+        #t.start()
 
+
+    def _reroute(self):
+        present_time = time.time()
+        while True:
+            if present_time - self.start_time < self.initiation_delay_route:
+                continue
+            else:
+                self.trigger_bw_red_sw1()
+                break
+        return
     def _monitorTraffic(self):
         """
             Main entry method of monitoring traffic.
@@ -254,8 +269,29 @@ class SimpleSwitch15(app_manager.RyuApp):
             free_bw = self._get_free_bw(capacity, speed)
             self.free_bandwidth[dpid].setdefault(port_no, None)
             self.free_bandwidth[dpid][port_no] = free_bw
+            if(free_bw <= MAX_CAPACITY - THRESH_CAP):
+                #self.trigger_bw_red(dpid, port_no)
+                self.trigger_bw_red_sw1()
         else:
             self.logger.info("Port is Down")
+
+    def trigger_bw_red_sw1(self):
+        #3 is the in_port
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~trigger~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        flow_info = (2048, "10.1.1.1", "10.1.4.1", 3)
+        priority = 50
+        path = [1, 5, 6, 8, 4]
+        ofproto = ofproto_v1_4
+        self.install_flow(self.datapaths,
+                                   self.link_to_port,
+                                   path, flow_info, ofproto.OFP_NO_BUFFER,priority, None)
+        return
 
     def _save_stats(self, _dict, key, value, length=5):
         if key not in _dict:
@@ -286,7 +322,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
             Sending request msg to datapath
         """
-        self.logger.info('send stats request: %016x', datapath.id)
+        #self.logger.info('send stats request: %016x', datapath.id)
         #ofp = ofproto_v1_4
         ofproto = datapath.ofproto
         #ofp_parser = ofproto_v1_4_parser
@@ -870,7 +906,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             return None
 
 
-    def send_flow_mod(self, datapath, flow_info, src_port, dst_port):
+    def send_flow_mod(self, datapath, flow_info, src_port, dst_port, priority=30):
         """
             Build flow entry, and send it to datapath.
             flow_info = (eth_type, src_ip, dst_ip, in_port)
@@ -914,10 +950,10 @@ class SimpleSwitch15(app_manager.RyuApp):
         else:
             pass
 
-        self.add_flow(datapath, 30, match, actions,
-                      idle_timeout=5, hard_timeout=10)
+        self.add_flow(datapath, priority, match, actions,
+                      idle_timeout=0, hard_timeout=0)
 
-    def install_flow(self, datapaths, link_to_port, path, flow_info, buffer_id, data=None):
+    def install_flow(self, datapaths, link_to_port, path, flow_info, buffer_id, priority=30, data=None):
         '''
             Install flow entries for datapaths.
             path=[dpid1, dpid2, ...]
@@ -941,7 +977,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             if port and port_next:
                 src_port, dst_port = port[1], port_next[0]
                 datapath = datapaths[path[i]]
-                self.send_flow_mod(datapath, flow_info, src_port, dst_port)
+                self.send_flow_mod(datapath, flow_info, src_port, dst_port, priority)
 
         #  Install flow entry for the first datapath.
         port_pair = self.get_port_pair_from_link(link_to_port, path[0], path[1])
@@ -949,7 +985,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             self.logger.info("Port not found in first hop.")
             return
         out_port = port_pair[0]
-        self.send_flow_mod(first_dp, flow_info, in_port, out_port)
+        self.send_flow_mod(first_dp, flow_info, in_port, out_port, priority)
 
         # #  Install flow entry for the last datapath.
         # port_pair = self.get_port_pair_from_link(link_to_port, path[0], path[1])
@@ -1280,10 +1316,13 @@ class SimpleSwitch15(app_manager.RyuApp):
                 else:
                     self.logger.info("[PATH] switch : %s :: %s<-->%s: %s" % (datapath.id, ip_src, ip_dst, path))
                     flow_info = (eth_type, ip_src, ip_dst, in_port)
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                    print("eth_type : %s ::: buffer_id : %s" % (eth_type, msg.buffer_id))
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 # Install flow entries to datapaths along the path.
                 self.install_flow(self.datapaths,
                                   self.link_to_port,
-                                  path, flow_info, msg.buffer_id, msg.data)
+                                  path, flow_info, msg.buffer_id, 30, msg.data)
         else:
             # Flood is not good.
             self.flood(msg)
@@ -1296,7 +1335,7 @@ class SimpleSwitch15(app_manager.RyuApp):
             Show statistics information according to data type.
             _type: 'port' / 'flow'
         '''
-        #return
+        return
 
         bodys = self.stats[_type]
         if _type == 'flow':
