@@ -60,8 +60,8 @@ from threading import Timer
 #    ofproto_v1_5.OFPMP_FLOW_DESC] = OFPFlowStatsReply
 
 
-MAX_CAPACITY = 10000
-THRESH_CAP = 7000
+MAX_CAPACITY = 800
+THRESH_CAP = 500
 
 class SimpleSwitch15(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_4.OFP_VERSION]
@@ -105,7 +105,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.graph = nx.DiGraph()
         # Get initiation delay.
         self.initiation_delay = 10
-        self.initiation_delay_route = 30
+        self.initiation_delay_route = 70
         self.start_time = time.time()
         self.discover_thread = hub.spawn(self._discover)
 
@@ -127,7 +127,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         # free bandwidth of links respectively.
         self.monitor_thread = hub.spawn(self._monitorTraffic)
         self.save_freebandwidth_thread = hub.spawn(self._save_bw_graph)
-        #t = Timer(35.0, self._reroute)
+        #t = Timer(72.0, self._reroute)
         #t.start()
 
 
@@ -265,10 +265,12 @@ class SimpleSwitch15(app_manager.RyuApp):
         """
         port_state = self.port_features.get(dpid).get(port_no)
         if port_state:
-            capacity = 10000   # The true bandwidth of link, instead of 'curr_speed'.
+            capacity = 800   # The true bandwidth of link, instead of 'curr_speed'.
             free_bw = self._get_free_bw(capacity, speed)
             self.free_bandwidth[dpid].setdefault(port_no, None)
             self.free_bandwidth[dpid][port_no] = free_bw
+            if(dpid == 3 and port_no == 1):
+                print(free_bw)
             #if(free_bw <= MAX_CAPACITY - THRESH_CAP):
                 #self.trigger_bw_red(dpid, port_no)
                 #self.trigger_bw_red_sw1()
@@ -285,7 +287,7 @@ class SimpleSwitch15(app_manager.RyuApp):
         print("~~~~~~~~~~~~~~~~~~~~~~")
         print("~~~~~~~~~~~~~~~~~~~~~~")
         flow_info = (2048, "10.1.1.1", "10.1.4.1", 3)
-        priority = 50
+        priority = 80
         path = [1, 5, 6, 8, 4]
         ofproto = ofproto_v1_4
         self.install_flow(self.datapaths,
@@ -408,8 +410,8 @@ class SimpleSwitch15(app_manager.RyuApp):
         self.graph = self.get_graph(self.link_to_port.keys())
         self.shortest_paths = self.all_k_shortest_paths(
             self.graph, weight='weight', k=4)
-        print("shortest paths array :: ")
-        print self.shortest_paths
+        #print("shortest paths array :: ")
+        #print self.shortest_paths
         self.logger.info("[DONE NETWORK TOPOLOGY]")
     
     def create_port_map(self, switch_list):
@@ -425,8 +427,8 @@ class SimpleSwitch15(app_manager.RyuApp):
             for port in sw.ports:
                 # switch_port_table = {dpid:set(port_num,),}
                 self.switch_port_table[dpid].add(port.port_no)
-        print("switch port table ::  ") 
-        print(self.switch_port_table)
+        #print("switch port table ::  ") 
+        #print(self.switch_port_table)
 
     def create_interior_links(self, link_list):
         """
@@ -443,8 +445,8 @@ class SimpleSwitch15(app_manager.RyuApp):
                 self.interior_ports[link.src.dpid].add(link.src.port_no)
             if link.dst.dpid in self.switches:
                 self.interior_ports[link.dst.dpid].add(link.dst.port_no)
-        print("interior link ports ::  ") 
-        print(self.link_to_port)
+        #print("interior link ports ::  ") 
+        #print(self.link_to_port)
     
 
     def create_access_ports(self):
@@ -456,8 +458,8 @@ class SimpleSwitch15(app_manager.RyuApp):
             interior_port = self.interior_ports[sw]
             # That comes the access port of the switch.
             self.access_ports[sw] = all_port_table - interior_port
-        print("access port table ::  ") 
-        print(self.access_ports)
+        #print("access port table ::  ") 
+        #print(self.access_ports)
 
 
     def get_graph(self, link_list):
@@ -1311,9 +1313,18 @@ class SimpleSwitch15(app_manager.RyuApp):
                         L4_Proto = 'UDP'
                     else:
                         pass
+                    if(ip_src == '10.1.1.1' and ip_dst == '10.1.4.1'):
+                        path = [1, 2, 3, 4]
+                    elif(ip_dst == '10.1.1.1' and ip_src == '10.1.4.1'):
+                        path = [4, 3, 2, 1]
                     self.logger.info("[PATH] switch : %s :: %s<-->%s(%s Port:%d): %s" % (datapath.id, ip_src, ip_dst, L4_Proto, L4_port, path))
                     flow_info = (eth_type, ip_src, ip_dst, in_port, ip_proto, Flag, L4_port)
                 else:
+                    if(ip_src == '10.1.1.1' and ip_dst == '10.1.4.1'):
+                        path = [1, 2, 3, 4]
+                    elif(ip_dst == '10.1.1.1' and ip_src == '10.1.4.1'):
+                        path = [4, 3, 2, 1]
+                    
                     self.logger.info("[PATH] switch : %s :: %s<-->%s: %s" % (datapath.id, ip_src, ip_dst, path))
                     flow_info = (eth_type, ip_src, ip_dst, in_port)
                     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")

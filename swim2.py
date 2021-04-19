@@ -41,7 +41,7 @@ parser.add_argument('--dir', '-d',
 parser.add_argument('--time', '-t',
                     help="Duration (sec) to run each experiment",
                     type=int,
-                    default=10)
+                    default=90)
 parser.add_argument('--cport', '-c',
                     help="Controller Port (default:6633)",
                     type=int,
@@ -82,15 +82,15 @@ class ExperimentTopo(Topo):
         }
 
         switch_lconfig1  = {
-            'bw':    1000,
+            'bw':    800,
             'delay': '0.2ms'
         }
         switch_lconfig2  = {
-            'bw':    1000,
+            'bw':    800,
             'delay': '0.2ms'
         }
         switch_lconfig3  = {
-            'bw':    1000,
+            'bw':    800,
             'delay': '0.2ms'
         }
         link_lconfig1 = {
@@ -116,7 +116,7 @@ class ExperimentTopo(Topo):
         
 
         """Configure the port and set its properties.
-           bw: bandwidth in b/s (e.g. '10m')
+           bw: bandwidth in Mb/s (e.g. '10m')
            delay: transmit delay (e.g. '1ms' )
            jitter: jitter (e.g. '1ms')
            loss: loss (e.g. '1%' )
@@ -321,7 +321,7 @@ def iperf_bbr_mon(net, i, port):
 
 def start_capture(outfile="capture.dmp", interface=""):
     monitor = Process(target=filter_packets,
-                      args=("", outfile))
+                      args=(interface, outfile))
     monitor.start()
     return monitor
 
@@ -534,7 +534,10 @@ def main():
     #flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     #flows = None
 
-    cap = start_capture("{}/capture_pcc.dmp".format(args.dir))
+    cap = start_capture("{}/capture_pcc.dmp".format(args.dir), "-i sw1-eth3")
+    
+    cap2 = start_capture("{}/capture_pcc_sw3.dmp".format(args.dir), "-i sw3-eth1")
+    
     side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     #side_flows_thread = threading.Thread(target = start_side_flows, (net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None) )
     #side_flows_thread.start()
@@ -545,6 +548,7 @@ def main():
     display_countdown(args.time + 5)
     Popen("killall tcpdump", shell=True)
     cap.join()
+    cap2.join()
     
     main_send_filter = "src 10.1.1.1 and dst 10.1.4.1 and dst port 2345"
     main_receive_filter = "src 10.1.4.1 and dst 10.1.1.1 and src port 2345"
@@ -553,16 +557,50 @@ def main():
     filter_capture(main_filter,
                    "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_1.dmp".format(args.dir)) 
 
-    side_send_filter = "src 10.1.2.1 and dst 10.1.5.1 and dst port 2345"
-    side_receive_filter = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
-    side_filter = '"({}) or ({})"'.format(side_send_filter, side_receive_filter)
+    side_send_filter1 = "src 10.1.2.1 and dst 10.1.5.1 and dst port 2345"
+    side_receive_filter1 = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
+    side_filter1 = '"({}) or ({})"'.format(side_send_filter1, side_receive_filter1)
     
     display_countdown(5)
     
-    print "Filtering PCC flow of 2 and 5..."
-    filter_capture(side_filter,
-                   "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_2.dmp".format(args.dir)) 
+    print "Filtering PCC flow of 21 and 5..."
+    filter_capture(side_filter1,
+                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_21.dmp".format(args.dir)) 
 
+    side_send_filter2 = "src 10.1.2.2 and dst 10.1.5.1 and dst port 2346"
+    side_receive_filter2 = "src 10.1.5.1 and dst 10.1.2.2 and src port 2346"
+    side_filter2 = '"({}) or ({})"'.format(side_send_filter2, side_receive_filter2)
+    
+    display_countdown(5)
+    
+    print "Filtering PCC flow of 22 and 5..."
+    filter_capture(side_filter2,
+                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_22.dmp".format(args.dir))
+
+    side_send_filter3 = "src 10.1.2.3 and dst 10.1.5.1 and dst port 2347"
+    side_receive_filter3 = "src 10.1.5.1 and dst 10.1.2.3 and src port 2347"
+    side_filter3 = '"({}) or ({})"'.format(side_send_filter3, side_receive_filter3)
+    
+    display_countdown(5)
+    
+    print "Filtering PCC flow of 23 and 5..."
+    filter_capture(side_filter3,
+                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_23.dmp".format(args.dir))
+
+    
+    side_filter4 = '"({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({})"'.format(
+                                                        main_send_filter, main_receive_filter,
+                                                        side_send_filter1, side_receive_filter1, 
+                                                        side_send_filter2, side_receive_filter2,
+                                                        side_send_filter3, side_receive_filter3)
+    
+    display_countdown(5)
+    
+    print "Filtering PCC flow of * and 5..."
+    filter_capture(side_filter4,
+                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
+
+    display_countdown(5)
 
      
     # n_iperf_flows = 1
@@ -612,9 +650,9 @@ def main():
                 
 
     # trigger a pingAllFull to solve the ARP and the delay associated
-    CLI(net)
+    #CLI(net)
     # Stop mininet
-    #net.stop()
+    net.stop()
 
     #plot_graphs()
     # Kill the controller process
