@@ -22,6 +22,8 @@ AXES_LABELSIZE = 24
 TICK_LABELSIZE = 24
 TEXT_LABELSIZE = 24
 
+AXES_TITLESIZE = 24
+
 COLOR_LIGHTGRAY = '#cccccc'
 
 #COLOR_HLINES = '#606060'
@@ -38,6 +40,7 @@ rcParams['xtick.labelsize'] = TICK_LABELSIZE
 rcParams['ytick.labelsize'] = TICK_LABELSIZE
 rcParams['xtick.major.pad'] = 4
 rcParams['ytick.major.pad'] = 6
+rcParams['axes.titlesize'] = AXES_TITLESIZE
 rcParams['figure.subplot.top'] = DEF_AXIS_TOP
 rcParams['figure.subplot.bottom'] = DEF_AXIS_BOTTOM
 rcParams['figure.subplot.left'] = DEF_AXIS_LEFT
@@ -58,6 +61,7 @@ def quarter_size():
     QUARTER_AXIS_HEIGHT = QUARTER_AXIS_TOP - QUARTER_AXIS_BOTTOM
 
     QUARTER_AXES_LABELSIZE = 40
+    QUARTER_AXES_TITLESIZE = 40
     QUARTER_TICK_LABELSIZE = 40
     QUARTER_TEXT_LABELSIZE = 40
 
@@ -66,10 +70,12 @@ def quarter_size():
                   'grid' : True})
     rc('legend', **{'fontsize': 'xx-large'})
     rcParams['axes.labelsize'] = QUARTER_AXES_LABELSIZE
+    QUARTER_AXES_TITLESIZE = 40
     rcParams['xtick.labelsize'] = QUARTER_TICK_LABELSIZE
     rcParams['ytick.labelsize'] = QUARTER_TICK_LABELSIZE
     rcParams['xtick.major.pad'] = 16
     rcParams['ytick.major.pad'] = 20
+    rcParams['axes.titlesize'] = QUARTER_AXES_TITLESIZE
     rcParams['figure.subplot.top'] = QUARTER_AXIS_TOP
     rcParams['figure.subplot.bottom'] = QUARTER_AXIS_BOTTOM
     rcParams['figure.subplot.left'] = QUARTER_AXIS_LEFT

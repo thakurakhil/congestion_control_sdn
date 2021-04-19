@@ -56,16 +56,14 @@ if args.legend is None:
     args.legend = []
     for file in args.files:
         name = "new"
-        if file == "./captcp-csv_pcc_1.txt":
+        if file == "./iperf_csv_pcc_0.txt":
             name = "h11"
-        elif file == "./captcp-csv_pcc_21.txt":
+        elif file == "./iperf_csv_pcc_1.txt":
             name = "h21"
-        elif file == "./captcp-csv_pcc_22.txt":
+        elif file == "./iperf_csv_pcc_2.txt":
             name = "h22"
-        elif file == "./captcp-csv_pcc_23.txt":
+        elif file == "./iperf_csv_pcc_3.txt":
             name = "h23"
-        elif file == "./captcp-csv_pcc_5.txt":
-            name = "sw5"
         args.legend.append(name)
 
 to_plot=[]
@@ -98,7 +96,7 @@ for i, f in enumerate(sorted(args.files)):
 
 if args.legend is not None:
 	plt.legend()
-plt.ylabel("Throughput (Mbits)")
+plt.ylabel("Rate (Mbits)")
 plt.grid(True)
 plt.xlabel("Seconds")
 plt.tight_layout()

@@ -17,7 +17,12 @@ parser.add_argument('--files', '-f',
 parser.add_argument('--xlimit',
                     help="Upper limit of x axis, data after ignored",
                     type=float,
-                    default=8)
+                    default=600)
+
+parser.add_argument('--title', '-t',
+                    help="Title of the graph",
+                    type=str,
+                    default="")
 
 parser.add_argument('--out', '-o',
                     help="Output png file for the plot.",
@@ -36,16 +41,25 @@ for i, f in enumerate(args.files):
     rtts = [r * 1000 for j, r in enumerate(rtts)  #rtt in ms
             if xaxis[j] <= args.xlimit]
     xaxis = [x for x in xaxis if x <= args.xlimit]
-    if "bbr" in args.files[i]:
-	    name = "bbr"
-    elif "cubic" in args.files[i]:
-	    name = "cubic"
-    elif "pcc" in args.files[i]:
-        name = "pcc"
+    
+    name = "new"
+    if args.files[i] == "./pcc_rtt_1.txt":
+        name = "h11"
+    elif args.files[i] == "./pcc_rtt_21.txt":
+        name = "h21"
+    elif args.files[i] == "./pcc_rtt_22.txt":
+        name = "h22"
+    elif args.files[i] == "./pcc_rtt_23.txt":
+        name = "h23"
+    elif args.files[i] == "./pcc_rtt_5.txt":
+        name = "sw5"
     
     ax.plot(xaxis, rtts, lw=2, label=name)
     plt.legend()
     ax.xaxis.set_major_locator(LinearLocator(5))
+    ax.set_title(args.title)
+    ax.set_xticks([0,10,20,30,40,50,60,70,80,90,100])
+    #ax.set_xtickslabels()
 
 plt.ylabel("RTT (ms)")
 plt.xlabel("Seconds")
