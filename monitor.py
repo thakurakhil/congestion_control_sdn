@@ -5,12 +5,12 @@ import re
 
 default_dir = '.'
 
-def monitor_qlen(iface, interval_sec = 0.01, fname='%s/qlen.txt' % default_dir, host=None):
+def monitor_qlen(iface, interval_sec = 1.0, fname='%s/qlen.txt' % default_dir, host=None):
     pat_queued = re.compile(r'backlog\s[^\s]+\s([\d]+)p')
     cmd = "tc -s qdisc show dev %s" % (iface)
     # monitoring is run on host if provided
     runner = Popen if host is None else host.popen
-
+    t0 = "%f" % time()
     ret = []
     open(fname, 'w').write('')
     while 1:
@@ -20,8 +20,9 @@ def monitor_qlen(iface, interval_sec = 0.01, fname='%s/qlen.txt' % default_dir, 
         matches = pat_queued.findall(output)
         if matches and len(matches) > 1:
             ret.append(matches[1])
-            t = "%f" % time()
-            open(fname, 'a').write(t + ',' + matches[1] + '\n')
+            t1 = "%f" % time()
+            open(fname, 'a').write(str(float(t1)-float(t0)) + ',' + matches[1] + '\n')
+        #t =  t + 1
         sleep(interval_sec)
     return
 

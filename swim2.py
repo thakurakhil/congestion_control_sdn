@@ -50,7 +50,7 @@ parser.add_argument('--cport', '-c',
 
 args = parser.parse_args()
 
-
+queue_length = 1000
 def runner(popen, noproc=False):
     def run_fn(command, background=False, daemon=True):
         #print "runnin the command : {}".format(command)
@@ -78,40 +78,54 @@ class ExperimentTopo(Topo):
         switch_config = {
             #'enable_ecn': args.ecn,
             #'use_hfsc': args.use_hfsc,
-            'max_queue_size': 60
+            #min-rate=10000000000 10 Gbps
+            'max_queue_size': queue_length
         }
 
         switch_lconfig1  = {
             'bw':    800,
-            'delay': '0.2ms'
+            'delay': '0.2ms',
+            'max_queue_size': queue_length
         }
         switch_lconfig2  = {
             'bw':    800,
-            'delay': '0.2ms'
+            'delay': '0.2ms',
+            'max_queue_size': queue_length
         }
         switch_lconfig3  = {
             'bw':    800,
-            'delay': '0.2ms'
+            'delay': '0.2ms',
+            'max_queue_size': queue_length
+        }
+        switch_lconfig4  = {
+            'bw':    800,
+            'delay': '0.2ms',
+            'max_queue_size': queue_length
         }
         link_lconfig1 = {
             'bw':    1000,
-            'delay': '1ms'
+            'delay': '1ms',
+            'max_queue_size': queue_length
         }
         link_lconfig2 = {
             'bw':    1000,
-            'delay': '1ms'
+            'delay': '1ms',
+            'max_queue_size': queue_length
         }
         link_lconfig3 = {
             'bw':    1000,
-            'delay': '1ms'
+            'delay': '1ms',
+            'max_queue_size': queue_length
         }
         link_lconfig4 = {
             'bw':    1000,
-            'delay': '1ms'
+            'delay': '1ms',
+            'max_queue_size': queue_length
         }
         link_lconfig5 = {
             'bw':    1000,
-            'delay': '1ms'
+            'delay': '1ms',
+            'max_queue_size': queue_length
         }
         
 
@@ -129,7 +143,27 @@ class ExperimentTopo(Topo):
            latency_ms: TBF latency parameter
            enable_ecn: enable ECN (False)
            enable_red: enable RED (False)
-           max_queue_size: queue limit parameter for netem in packets length"""
+           max_queue_size: queue limit parameter for netem in packets length
+
+
+            bw: bandwidth in Mbps (e.g. 10) with HTB by default
+            use_hfsc: use HFSC scheduling instead of HTB for shaping
+            use_tbf: use TBF scheduling instead of HTB for shaping
+            latency_ms: TBF latency parameter
+            enable_ecn: enable ECN by adding a RED qdisc after shaping (False)
+            enable_red: enable RED after shaping (False)
+            speedup: experimental switch-side bw option (switches-only)
+            delay: transmit delay (e.g. '1ms') with netem
+            jitter: jitter (e.g. '1ms') with netem
+            loss: loss (e.g. '1%'' ) with netem
+            max_queue_size: queue limit parameter for the netem qdisc
+            gro: enable GRO (False)
+            txo: enable transmit checksum offload (True)
+            rxo: enable receive checksum offload (True)
+
+           """
+
+
 
         # Just create a partial topology for the experiment to save resources
         self.addSwitch('sw1', dpid='0000000000000001', **switch_config)
@@ -146,7 +180,7 @@ class ExperimentTopo(Topo):
 
         # Connect the switches together
         self.addLink('sw1', 'sw2', **switch_lconfig1)
-        self.addLink('sw2', 'sw3', **switch_lconfig1)
+        self.addLink('sw2', 'sw3', **switch_lconfig4)
         self.addLink('sw3', 'sw4', **switch_lconfig1)
         self.addLink('sw1', 'sw5', **switch_lconfig1)
         self.addLink('sw5', 'sw6', **switch_lconfig2)
@@ -268,6 +302,12 @@ def insert_flow_cmd(switch, ip, in_port, dst_port):
     os.system(cmd_ip)
     return
 
+def insert_queue_cmd(interface, packet_length):
+    cmd_queue = "sudo ifconfig %s txqueuelen %d" % (interface, packet_length)
+    os.system(cmd_queue)
+
+    return
+
 def install_proactive_flows(net, topo):
     #switch sw1
     insert_flow_cmd("sw1", "10.1.1.1", 1, 3)
@@ -304,12 +344,20 @@ def install_proactive_flows(net, topo):
     insert_flow_cmd("sw4", "10.1.4.1", 2, 4)
     insert_flow_cmd("sw4", "10.1.4.1", 3, 4)
 
+    # insert_queue_cmd("sw2-eth2", queue_length)
+
 #specific monitor for bbr parameters obtained from comand ss
 def start_bbrmon(dst, interval_sec=0.1, outfile="bbr.txt", runner=None):
     monitor = Process(target=monitor_bbr,
                       args=(dst, interval_sec, outfile, runner))
     monitor.start()
     return monitor
+
+def start_queuemon(iface, interval_sec=0.1):
+    monitor = Process(target=monitor_qlen,
+                      args=(iface, 1.0))
+    monitor.start()
+    return 
 
 def iperf_bbr_mon(net, i, port):
     mon = start_bbrmon("%s:%s" % (net.get("h020101").IP(), port),
@@ -516,6 +564,7 @@ def main():
     controller = RemoteController('c1', ip='127.0.0.1', port=args.cport)
     #topo = DCTopo()
     topo = ExperimentTopo()
+
     switch = partial(OVSSwitch, protocols='OpenFlow14')
     net = Mininet(topo=topo, link=TCLink, autoSetMacs=True, autoStaticArp=True, controller=controller, switch=switch)
     #net = Mininet(topo=topo, link=TCLink, autoSetMacs=True, switch=switch, controller = controller)
@@ -523,7 +572,9 @@ def main():
     #c0 = net.addController('Ryu', controller=RemoteController, ip='127.0.0.1', protocols='OpenFlow13', port=6633)
 
     # Start the network
+    insert_queue_cmd("sw2-eth2", queue_length)
     net.start()
+    
     install_proactive_flows(net, topo)
     dumpNodeConnections(net.hosts) #diagnostic thing
     #net.pingAll()
@@ -536,8 +587,8 @@ def main():
 
     cap = start_capture("{}/capture_pcc.dmp".format(args.dir), "-i sw1-eth3")
     
-    cap2 = start_capture("{}/capture_pcc_sw3.dmp".format(args.dir), "-i sw3-eth1")
-    
+    cap2 = start_capture("{}/capture_pcc_sw2.dmp".format(args.dir), "-i sw2-eth2")
+    #start_queuemon("sw2-eth2")
     side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     #side_flows_thread = threading.Thread(target = start_side_flows, (net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None) )
     #side_flows_thread.start()
@@ -549,6 +600,7 @@ def main():
     Popen("killall tcpdump", shell=True)
     cap.join()
     cap2.join()
+    #que.join()
     
     main_send_filter = "src 10.1.1.1 and dst 10.1.4.1 and dst port 2345"
     main_receive_filter = "src 10.1.4.1 and dst 10.1.1.1 and src port 2345"
@@ -565,7 +617,7 @@ def main():
     
     print "Filtering PCC flow of 21 and 5..."
     filter_capture(side_filter1,
-                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_21.dmp".format(args.dir)) 
+                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_21.dmp".format(args.dir)) 
 
     side_send_filter2 = "src 10.1.2.2 and dst 10.1.5.1 and dst port 2346"
     side_receive_filter2 = "src 10.1.5.1 and dst 10.1.2.2 and src port 2346"
@@ -575,7 +627,7 @@ def main():
     
     print "Filtering PCC flow of 22 and 5..."
     filter_capture(side_filter2,
-                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_22.dmp".format(args.dir))
+                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_22.dmp".format(args.dir))
 
     side_send_filter3 = "src 10.1.2.3 and dst 10.1.5.1 and dst port 2347"
     side_receive_filter3 = "src 10.1.5.1 and dst 10.1.2.3 and src port 2347"
@@ -585,7 +637,7 @@ def main():
     
     print "Filtering PCC flow of 23 and 5..."
     filter_capture(side_filter3,
-                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_23.dmp".format(args.dir))
+                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_23.dmp".format(args.dir))
 
     
     side_filter4 = '"({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({})"'.format(
@@ -598,7 +650,7 @@ def main():
     
     print "Filtering PCC flow of * and 5..."
     filter_capture(side_filter4,
-                   "{}/capture_pcc_sw3.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
+                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
 
     display_countdown(5)
 

@@ -42,9 +42,9 @@ for i, f in enumerate(args.files):
             if xaxis[j] <= args.xlimit]
     xaxis = [x for x in xaxis if x <= args.xlimit]
     
-    name = "new"
+    name = "h11"
     if args.files[i] == "./pcc_rtt_1.txt":
-        name = "h11"
+        name = "new"
     elif args.files[i] == "./pcc_rtt_21.txt":
         name = "h21"
     elif args.files[i] == "./pcc_rtt_22.txt":

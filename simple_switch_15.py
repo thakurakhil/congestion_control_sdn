@@ -335,6 +335,8 @@ class SimpleSwitch15(app_manager.RyuApp):
         datapath.send_msg(req)
         req = parser.OFPFlowStatsRequest(datapath)
         datapath.send_msg(req)
+        #req = parser.OFPQueueStatsRequest(datapath, 0, ofproto.OFPP_ANY,ofproto.OFPQ_ALL)
+        #datapath.send_msg(req)
 
     def get_min_bw_of_links(self, graph, path, min_bw):
         """
@@ -647,6 +649,19 @@ class SimpleSwitch15(app_manager.RyuApp):
     #             if not switch_id in switch_interfaces:
     #                 self.revoke_rate_limiting(switch, in_port, out_port, eth_dst, rate)
     #     """
+
+    @set_ev_cls(ofp_event.EventOFPQueueStatsReply, MAIN_DISPATCHER)
+    def queue_stats_reply_handler(self, ev):
+        queues = []
+        #print(ev.msg.body)
+        for stat in ev.msg.body:
+            queues.append('port_no=%d queue_id=%d '
+                          'tx_bytes=%d tx_packets=%d tx_errors=%d '
+                          'duration_sec=%d duration_nsec=%d'
+                          'properties=%s' %
+                          (stat.port_no, stat.queue_id,
+                           stat.tx_bytes, stat.tx_packets))
+        #self.logger.info('*****QueueStats****: %s', queues)
 
     @set_ev_cls(ofp_event.EventOFPFlowStatsReply, MAIN_DISPATCHER)
     def _flow_stats_reply_handler(self, ev):
