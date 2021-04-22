@@ -29,8 +29,8 @@ echo "retriving pcc rtt for flow_pcc_22..."
 tshark -2 -r ./flow_pcc_22.dmp -R 'tcp.stream eq 1 && tcp.analysis.ack_rtt'  -e frame.time_relative -e tcp.analysis.ack_rtt -Tfields -E separator=, > ./pcc_rtt_22.txt
 echo "retriving pcc rtt for flow_pcc_23..."
 tshark -2 -r ./flow_pcc_23.dmp -R 'tcp.stream eq 1 && tcp.analysis.ack_rtt'  -e frame.time_relative -e tcp.analysis.ack_rtt -Tfields -E separator=, > ./pcc_rtt_23.txt
-echo "retriving pcc rtt for flow_pcc_5..."
-tshark -2 -r ./flow_pcc_5.dmp -R 'tcp.stream eq 1 && tcp.analysis.ack_rtt'  -e frame.time_relative -e tcp.analysis.ack_rtt -Tfields -E separator=, > ./pcc_rtt_5.txt
+#echo "retriving pcc rtt for flow_pcc_5..."
+#tshark -2 -r ./flow_pcc_5.dmp -R 'tcp.stream eq 1 && tcp.analysis.ack_rtt'  -e frame.time_relative -e tcp.analysis.ack_rtt -Tfields -E separator=, > ./pcc_rtt_5.txt
 
 ## echo "retriving bbr throughput for flow no:$(($i+1))..."
 ## captcp throughput -u Mbit --stdio flow_bbr_$i.dmp > captcp_bbr_$i.txt
@@ -69,17 +69,17 @@ echo "retriving pcc throughput for flow_pcc_23..."
 captcp throughput -u Mbit --stdio flow_pcc_23.dmp > captcp_pcc_23.txt
 awk "{print (\$1+$i*2-1)(\",\")(\$2) }" < captcp_pcc_23.txt > captcp-csv_pcc_23.txt
 
-echo "retriving pcc throughput for flow_pcc_5..."
-captcp throughput -u Mbit --stdio flow_pcc_5.dmp > captcp_pcc_5.txt
-awk "{print (\$1+$i*2-1)(\",\")(\$2) }" < captcp_pcc_5.txt > captcp-csv_pcc_5.txt
+# echo "retriving pcc throughput for flow_pcc_5..."
+# captcp throughput -u Mbit --stdio flow_pcc_5.dmp > captcp_pcc_5.txt
+# awk "{print (\$1+$i*2-1)(\",\")(\$2) }" < captcp_pcc_5.txt > captcp-csv_pcc_5.txt
 
 
 echo "plotting rtt graphs.."
-python $oldpwd/plot_ping.py -f ./pcc_rtt_1.txt ./pcc_rtt_21.txt ./pcc_rtt_22.txt ./pcc_rtt_23.txt ./pcc_rtt_5.txt -t "cmp of RTT -- without -- queue 1000" -o ./rtt_all_new.png
+python $oldpwd/plot_ping.py -f ./pcc_rtt_1.txt ./pcc_rtt_21.txt ./pcc_rtt_22.txt ./pcc_rtt_23.txt -t "cmp of RTT -- with the model -- queue size : 500" -l h11 h21 h22 h23 -o ./rtt_all_new.png
 echo "plotting throughput graphs.."
-python $oldpwd/plot_throughput.py  -f ./captcp-csv_pcc_1.txt ./captcp-csv_pcc_21.txt ./captcp-csv_pcc_22.txt ./captcp-csv_pcc_23.txt ./captcp-csv_pcc_5.txt -t "cmp of throughput -- without -- queue 1000" -o ./throughput_all_new.png
+python $oldpwd/plot_throughput.py  -f ./captcp-csv_pcc_1.txt ./captcp-csv_pcc_21.txt ./captcp-csv_pcc_22.txt ./captcp-csv_pcc_23.txt  -t "cmp of throughput -- with the model -- queue size : 500" -l h11 h21 h22 h23  -o ./throughput_all_new.png
 echo "plotting rates graphs.."
-python $oldpwd/plot_rates_iperf.py  -f ./iperf_csv_pcc_0.txt ./iperf_csv_pcc_1.txt ./iperf_csv_pcc_2.txt ./iperf_csv_pcc_3.txt -t "cmp of rates -- without -- queue 1000" -o ./rates_all_new.png
+python $oldpwd/plot_rates_iperf.py  -f ./iperf_csv_pcc_0.txt ./iperf_csv_pcc_1.txt ./iperf_csv_pcc_2.txt ./iperf_csv_pcc_3.txt -t "cmp of rates -- with the model -- queue size : 500" -l h11 h21 h22 h23 -o ./rates_all_new.png
 
 # python $oldpwd/plot_rates_iperf.py  -f ./iperf_csv_pcc_0.txt ../../old/all1/iperf_csv_pcc_0.txt -t "cmp of rates of h11 -- with vs without" -o ./rates_1v1.png
 

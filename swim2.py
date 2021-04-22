@@ -50,7 +50,7 @@ parser.add_argument('--cport', '-c',
 
 args = parser.parse_args()
 
-queue_length = 1000
+queue_length = 500
 def runner(popen, noproc=False):
     def run_fn(command, background=False, daemon=True):
         #print "runnin the command : {}".format(command)
@@ -648,11 +648,11 @@ def main():
     
     display_countdown(5)
     
-    print "Filtering PCC flow of * and 5..."
-    filter_capture(side_filter4,
-                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
+    # print "Filtering PCC flow of * and 5..."
+    # filter_capture(side_filter4,
+    #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
 
-    display_countdown(5)
+    # display_countdown(5)
 
      
     # n_iperf_flows = 1
