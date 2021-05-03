@@ -127,8 +127,8 @@ class SimpleSwitch15(app_manager.RyuApp):
         # free bandwidth of links respectively.
         self.monitor_thread = hub.spawn(self._monitorTraffic)
         self.save_freebandwidth_thread = hub.spawn(self._save_bw_graph)
-        t = Timer(30.0 + 8.0 + 15.0 , self._reroute)
-        t.start()
+        #t = Timer(30.0 + 8.0 + 15.0 , self._reroute)
+        #t.start()
 
 
     def _reroute(self):

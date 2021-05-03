@@ -1,3 +1,11 @@
+Linux akhil-VirtualBox 4.15.0-142-generic #146-Ubuntu SMP Tue Apr 13 01:11:19 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+	Ubuntu 18.04.1 LTS
+
+ (Open vSwitch) 2.15.90
+DB Schema 8.2.0
+
+
 uname -a
 git clone git://github.com/mininet/mininet 
 mininet/util/install.sh -a 
@@ -116,8 +124,7 @@ sudo python swim2.py
 
 sudo ovs-vsctl set s1 protocols=OpenFlow15
 ovs-appctl fdb/show s1
-ovs-ofctl show s1
---protocols=OpenFlow15
+ovs-ofctl show s1 --protocols=OpenFlow15
 ovs-ofctl dump-flows s1
 
 ovs-vsctl list Bridge

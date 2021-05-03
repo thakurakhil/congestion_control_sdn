@@ -50,7 +50,7 @@ parser.add_argument('--cport', '-c',
 
 args = parser.parse_args()
 
-queue_length = 500
+queue_length = 1000
 def runner(popen, noproc=False):
     def run_fn(command, background=False, daemon=True):
         #print "runnin the command : {}".format(command)
@@ -585,96 +585,93 @@ def main():
     #flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
     #flows = None
 
-    cap = start_capture("{}/capture_pcc.dmp".format(args.dir), "-i sw1-eth3")
+    # cap = start_capture("{}/capture_pcc.dmp".format(args.dir), "-i sw1-eth3")
     
-    cap2 = start_capture("{}/capture_pcc_sw2.dmp".format(args.dir), "-i sw2-eth2")
-    #start_queuemon("sw2-eth2")
-    side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
-    #side_flows_thread = threading.Thread(target = start_side_flows, (net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None) )
-    #side_flows_thread.start()
-    #side_flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    # cap2 = start_capture("{}/capture_pcc_sw2.dmp".format(args.dir), "-i sw2-eth2")
+    # #start_queuemon("sw2-eth2")
+    # side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    # #side_flows_thread = threading.Thread(target = start_side_flows, (net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None) )
+    # #side_flows_thread.start()
+    # #side_flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
 
 
-    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    # flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["pcc"], pre_flow_action=None)
+    # display_countdown(args.time + 5)
+    # Popen("killall tcpdump", shell=True)
+    # cap.join()
+    # cap2.join()
+    # #que.join()
+    
+    # main_send_filter = "src 10.1.1.1 and dst 10.1.4.1 and dst port 2345"
+    # main_receive_filter = "src 10.1.4.1 and dst 10.1.1.1 and src port 2345"
+    # main_filter = '"({}) or ({})"'.format(main_send_filter, main_receive_filter)
+    # print "Filtering PCC flow of 1 and 4..."
+    # filter_capture(main_filter,
+    #                "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_1.dmp".format(args.dir)) 
+
+    # side_send_filter1 = "src 10.1.2.1 and dst 10.1.5.1 and dst port 2345"
+    # side_receive_filter1 = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
+    # side_filter1 = '"({}) or ({})"'.format(side_send_filter1, side_receive_filter1)
+    
+    # display_countdown(5)
+    
+    # print "Filtering PCC flow of 21 and 5..."
+    # filter_capture(side_filter1,
+    #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_21.dmp".format(args.dir)) 
+
+    # side_send_filter2 = "src 10.1.2.2 and dst 10.1.5.1 and dst port 2346"
+    # side_receive_filter2 = "src 10.1.5.1 and dst 10.1.2.2 and src port 2346"
+    # side_filter2 = '"({}) or ({})"'.format(side_send_filter2, side_receive_filter2)
+    
+    # display_countdown(5)
+    
+    # print "Filtering PCC flow of 22 and 5..."
+    # filter_capture(side_filter2,
+    #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_22.dmp".format(args.dir))
+
+    # side_send_filter3 = "src 10.1.2.3 and dst 10.1.5.1 and dst port 2347"
+    # side_receive_filter3 = "src 10.1.5.1 and dst 10.1.2.3 and src port 2347"
+    # side_filter3 = '"({}) or ({})"'.format(side_send_filter3, side_receive_filter3)
+    
+    # display_countdown(5)
+    
+    # print "Filtering PCC flow of 23 and 5..."
+    # filter_capture(side_filter3,
+    #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_23.dmp".format(args.dir))
+
+    
+    # side_filter4 = '"({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({})"'.format(
+    #                                                     main_send_filter, main_receive_filter,
+    #                                                     side_send_filter1, side_receive_filter1, 
+    #                                                     side_send_filter2, side_receive_filter2,
+    #                                                     side_send_filter3, side_receive_filter3)
+    
+    # display_countdown(5)
+    
+    # # print "Filtering PCC flow of * and 5..."
+    # # filter_capture(side_filter4,
+    # #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
+
+    # # display_countdown(5)
+
+     
+    n_iperf_flows = 1
+    time_btwn_flows = 0
+
+    cap = start_capture("{}/capture_bbr.dmp".format(args.dir), "-i sw1-eth3")
+    side_flows_thread = start_side_flows_thread(net, n_iperf_flows, time_btwn_flows, "iperf", ["bbr"], pre_flow_action=None)
+    flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["bbr"], pre_flow_action=None)
     display_countdown(args.time + 5)
     Popen("killall tcpdump", shell=True)
     cap.join()
-    cap2.join()
-    #que.join()
+
     
     main_send_filter = "src 10.1.1.1 and dst 10.1.4.1 and dst port 2345"
     main_receive_filter = "src 10.1.4.1 and dst 10.1.1.1 and src port 2345"
     main_filter = '"({}) or ({})"'.format(main_send_filter, main_receive_filter)
-    print "Filtering PCC flow of 1 and 4..."
+    print "Filtering bbr flow of 1 and 4..."
     filter_capture(main_filter,
-                   "{}/capture_pcc.dmp".format(args.dir), "{}/flow_pcc_1.dmp".format(args.dir)) 
-
-    side_send_filter1 = "src 10.1.2.1 and dst 10.1.5.1 and dst port 2345"
-    side_receive_filter1 = "src 10.1.5.1 and dst 10.1.2.1 and src port 2345"
-    side_filter1 = '"({}) or ({})"'.format(side_send_filter1, side_receive_filter1)
-    
-    display_countdown(5)
-    
-    print "Filtering PCC flow of 21 and 5..."
-    filter_capture(side_filter1,
-                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_21.dmp".format(args.dir)) 
-
-    side_send_filter2 = "src 10.1.2.2 and dst 10.1.5.1 and dst port 2346"
-    side_receive_filter2 = "src 10.1.5.1 and dst 10.1.2.2 and src port 2346"
-    side_filter2 = '"({}) or ({})"'.format(side_send_filter2, side_receive_filter2)
-    
-    display_countdown(5)
-    
-    print "Filtering PCC flow of 22 and 5..."
-    filter_capture(side_filter2,
-                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_22.dmp".format(args.dir))
-
-    side_send_filter3 = "src 10.1.2.3 and dst 10.1.5.1 and dst port 2347"
-    side_receive_filter3 = "src 10.1.5.1 and dst 10.1.2.3 and src port 2347"
-    side_filter3 = '"({}) or ({})"'.format(side_send_filter3, side_receive_filter3)
-    
-    display_countdown(5)
-    
-    print "Filtering PCC flow of 23 and 5..."
-    filter_capture(side_filter3,
-                   "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_23.dmp".format(args.dir))
-
-    
-    side_filter4 = '"({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({}) or ({})"'.format(
-                                                        main_send_filter, main_receive_filter,
-                                                        side_send_filter1, side_receive_filter1, 
-                                                        side_send_filter2, side_receive_filter2,
-                                                        side_send_filter3, side_receive_filter3)
-    
-    display_countdown(5)
-    
-    # print "Filtering PCC flow of * and 5..."
-    # filter_capture(side_filter4,
-    #                "{}/capture_pcc_sw2.dmp".format(args.dir), "{}/flow_pcc_5.dmp".format(args.dir)) 
-
-    # display_countdown(5)
-
-     
-    # n_iperf_flows = 1
-    # time_btwn_flows = 0
-
-    # cap = start_capture("{}/capture_cubic.dmp".format(args.dir), "")
-    # flows = start_flows(net, n_iperf_flows, time_btwn_flows, "iperf", ["cubic"], pre_flow_action=None)
-    # display_countdown(args.time + 5)
-    # Popen("killall tcpdump", shell=True)
-    # cap.join()
-
-    # for flow in flows:
-    #     if flow['filter']:
-    #         print "Filtering cubic flow {}...".format(flow['index'])
-    #         filter_capture(flow['filter'],
-    #                        "{}/capture_cubic.dmp".format(args.dir),
-    #                        "{}/flow_cubic_{}.dmp".format(args.dir, flow['index'])) 
-    #     if flow['monitor'] is not None:
-    #         flow['monitor'].terminate()
-
-    # #filter_capture(flows[0]['filter'],"{}/capture_cubic.dmp".format(args.dir),"{}/flow_cubic.dmp".format(args.dir))
-    
+                   "{}/capture_bbr.dmp".format(args.dir), "{}/flow_bbr_1.dmp".format(args.dir)) 
 
     # n_iperf_flows = 1
     # time_btwn_flows = 0
