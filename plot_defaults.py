@@ -31,10 +31,10 @@ COLOR_HLINES = 'black'
 HLINE_LABELSIZE = 24
 HLINE_LINEWIDTH = 2
 
-rc('axes', **{'labelsize' : 'large',
-              'titlesize' : 'large',
+rc('axes', **{'labelsize' : 24,
+              'titlesize' : 24,
               'grid' : True})
-rc('legend', **{'fontsize': 'xx-large'})
+rc('legend', **{'fontsize': 26})
 rcParams['axes.labelsize'] = AXES_LABELSIZE
 rcParams['xtick.labelsize'] = TICK_LABELSIZE
 rcParams['ytick.labelsize'] = TICK_LABELSIZE
@@ -68,7 +68,7 @@ def quarter_size():
     rc('axes', **{'labelsize' : 'xx-large',
                   'titlesize' : 'xx-large',
                   'grid' : True})
-    rc('legend', **{'fontsize': 'xx-large'})
+    rc('legend', **{'fontsize': 26})
     rcParams['axes.labelsize'] = QUARTER_AXES_LABELSIZE
     QUARTER_AXES_TITLESIZE = 40
     rcParams['xtick.labelsize'] = QUARTER_TICK_LABELSIZE
@@ -80,3 +80,5 @@ def quarter_size():
     rcParams['figure.subplot.bottom'] = QUARTER_AXIS_BOTTOM
     rcParams['figure.subplot.left'] = QUARTER_AXIS_LEFT
     rcParams['figure.subplot.right'] = QUARTER_AXIS_RIGHT
+
+quarter_size()
