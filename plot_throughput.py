@@ -77,7 +77,7 @@ def get_style(i):
     if i == 2:
         return {'color': 'green'}
     else:
-        return {'color': 'black'}
+        return {'color': 'yellow'}
 
 m.rc('figure', figsize=(32, 12))
 fig = figure()

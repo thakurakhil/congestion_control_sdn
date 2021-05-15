@@ -53,6 +53,17 @@ if args.legend is None:
             name = "sw5"
         args.legend.append(name)
 
+def get_style(i):
+    if i == 0:
+        return {'color': 'red'}
+    if i == 1:
+        return {'color': 'blue'}
+    if i == 2:
+        return {'color': 'green'}
+    else:
+        return {'color': 'orange'}
+
+
 m.rc('figure', figsize=(32, 12))
 fig = figure()
 ax = fig.add_subplot(111)
@@ -67,7 +78,7 @@ for i, f in enumerate(args.files):
     
     
     
-    ax.plot(xaxis, rtts, lw=2, label=args.legend[i])
+    ax.plot(xaxis, rtts, lw=2, label=args.legend[i], **get_style(i))
     plt.legend()
     ax.xaxis.set_major_locator(LinearLocator(5))
     ax.set_title(args.title)

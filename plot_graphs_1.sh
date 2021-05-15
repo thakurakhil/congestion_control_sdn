@@ -5,7 +5,6 @@ n_iperf_flows=$n_iperf_flows-1
 #results_with="./Bigresults/new/all3"
 #results_without="./Bigresults/old/all1"
 finalresults="./resultsNew"
-oldpwd=$PWD
 results_without="./Bigresults/queue/1000/without"
 results_with="./Bigresults/queue/1000/with"
 results_reno="./Bigresults/queue/cmp/reno"
@@ -15,16 +14,17 @@ results_with_750="./Bigresults/queue/750/with"
 results_without_500="./Bigresults/queue/500/without"
 results_with_500="./Bigresults/queue/500/with"
 
+oldpwd=$PWD
 
-#for (( i = 0; i <= $n_iperf_flows; i++ )) 
-#do
-i=0
+# #for (( i = 0; i <= $n_iperf_flows; i++ )) 
+# #do
+# i=0
 
 
 
-##plotting without our model 8000
+# ##plotting without our model 8000
 
-##rates
+# ##rates
 cd $results_without
 
 echo "plotting rates graphs.."
