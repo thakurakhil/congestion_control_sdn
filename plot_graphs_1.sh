@@ -21,6 +21,9 @@ oldpwd=$PWD
 # i=0
 
 
+# python ./plot_rates_iperf.py  -f ./Bigresults/queue/1000/with//iperf_csv_pcc_0.txt ./Bigresults/queue/cmp/reno/iperf_csv_reno_0.txt ./Bigresults/queue/cmp/cubic/iperf_csv_cubic_0.txt -t "" -l "our model" "reno" "cubic" -o ./resultsNew/rates_all_renoVpccVcubic_h11.png
+
+
 
 # ##plotting without our model 8000
 
