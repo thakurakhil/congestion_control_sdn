@@ -115,11 +115,11 @@ sudo insmod tcp_pcc.ko
 
 
 sudo mn -c
-# ryu-manager controller.py
-#default port is 6633
-#yes/simple_switch_15.py
+// ryu-manager controller.py
+//default port is 6633
+//yes/simple_switch_15.py
 ryu-manager --observe-links simple_switch_15.py --ofp-tcp-listen-port 6633 --verbose
-# ****observe-links is mandatory****
+// ****observe-links is mandatory****
 sudo python swim2.py
 
 sudo ovs-vsctl set s1 protocols=OpenFlow15
